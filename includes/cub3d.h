@@ -6,12 +6,19 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/01 11:30:58 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:35:16 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
+#define WALL '1'
+#define FLOOR '0'
+#define PLAYER_CHARS "NSEW"
+#define FILL 'X'
+#define SPACE ' '
+#define GAP '9'
 
 # include "../libft/libft.h"
 # include "../mlx_linux/mlx.h"
@@ -61,7 +68,8 @@ int			map_rows(char **map);
 int			is_texture_valid(char *texture);
 int			check_texture_path(char *path);
 int			is_color_valid(t_color color);
-int			is_map_closed(char **map, int rows);
+int			is_surrounded(char **map, int rows);
+int			is_closed(char **map);
 int			has_invalid_map_char(char **map);
 
 #endif
