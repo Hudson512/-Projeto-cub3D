@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator_config.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:54:45 by hmateque          #+#    #+#             */
-/*   Updated: 2025/04/30 14:19:44 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:41:47 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ void	validator_config(t_config *config)
 	// 	parse_exit("Error\nCor do teto inválida\n");
     
 	// Verificar se o mapa esta fechado por paredes (1) # Melhorar essa parte amanhã
-	if (!is_map_closed(config->map, map_rows(config->map)))
+	if (!is_surrounded(config->map, map_rows(config->map)))
 		parse_exit("Error\nMapa não está fechado por paredes\n");
+	if (!is_closed(config->map))
+		parse_exit("Error\nMap not closed\n");
 	// Verifica se o jogador está dentro do mapa
 }
