@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/04/30 14:19:14 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:17:08 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,6 @@ void	capture_map(char *line, t_config *config)
         || ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
 		return ;
 	config->map = ft_realloc_map(config->map, line);
-}
-
-static char	*ft_strdup_map(const char *s)
-{
-	char	*dest;
-	size_t	len;
-	int		i;
-
-	len = ft_strlen(s);
-	dest = ft_calloc(1, len + 1);
-	if (dest == NULL)
-		return (NULL);
-	i = 0;
-	while (s[i] != '\0' && s[i] != '\n')
-	{
-		dest[i] = s[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
 }
 
 char	**ft_realloc_map(char **old_map, char *new_line)
@@ -59,7 +39,7 @@ char	**ft_realloc_map(char **old_map, char *new_line)
 		new_map[i] = old_map[i];
 		i++;
 	}
-	new_map[i++] = ft_strdup_map(new_line);
+	new_map[i++] = ft_strdup(new_line);
 	collect_mem(new_map[i - 1]);
 	new_map[i] = NULL;
 	free(old_map);

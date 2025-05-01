@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/04/30 14:20:31 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:30:45 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int parse_file(const char *filename, t_config *config)
     int fd;
 
     config->map = NULL;
-    if (!check_extension(filename))
-        return (ft_putstr_fd("Error\nArquivo deve ter a extensao .cub\n", 2), 1);
+    if (!check_extension(filename, ".cub") || !validate_map_at_end(filename))
+        return (ft_putstr_fd("Error\nArquivo deve ter a extensao .cub ou o mapa deve ser a última parte do arquivo .cub\n", 2), 1);
     fd = open(filename, O_RDONLY);
     if (fd < 0)
         return (ft_putstr_fd("Error\nNao foi possivel abrir o arquivo\n", 2), 1);
@@ -34,10 +34,10 @@ int parse_file(const char *filename, t_config *config)
         free(line);
         line = get_next_line(fd);
     }
-    collect_mem(config->map);
-    capture_position(config->map, config);
     close(fd);
+    collect_mem(config->map);
     validator_config(config);
+    capture_position(config->map, config);
     return (0);
 }
 
@@ -60,3 +60,40 @@ void print_config(t_config *config)
         i++;
     }
 }
+
+
+static int	is_map_line(char *line)
+{
+	int i = 0;
+	while (line[i] == ' ')
+		i++;
+	return (line[i] == '1');
+}
+
+int	validate_map_at_end(const char *file_path)
+{
+	int		fd;
+	char	*line;
+	int		in_map = 0;
+
+	fd = open(file_path, O_RDONLY);
+	if (fd < 0)
+		return (0);
+    line = get_next_line(fd);
+	while (line != NULL)
+	{
+		if (!in_map && is_map_line(line))
+			in_map = 1;
+		else if (in_map && !is_map_line(line) && !is_empty_line(line))
+		{
+			free(line);
+			close(fd);
+			return (0);
+		}
+		free(line);
+        line = get_next_line(fd);
+	}
+	close(fd);
+	return (1);
+}
+

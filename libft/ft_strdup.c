@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 10:11:33 by lantonio          #+#    #+#             */
-/*   Updated: 2025/04/24 09:15:13 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:15:14 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strdup(const char *s)
 	if (dest == NULL)
 		return (NULL);
 	i = 0;
-	while (s[i] != '\0')
+	while (s[i] != '\0' && s[i] != '\n')
 	{
 		dest[i] = s[i];
 		i++;

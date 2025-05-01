@@ -6,37 +6,42 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:01:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/04/30 14:34:39 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:18:48 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int	is_space(char c)
+int	is_map_closed(char **map, int rows)
 {
-	return (c == ' ' || c == '\t');
+	(void)rows;
+	(void)map;
+	// Construir a logica para verificar se o mapa está fechado por paredes (1)
+	return (1);
 }
 
-int	is_map_closed(char **map, int rows)
+static int	is_valid_map_char(char c)
+{
+	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W'
+		|| c == ' ');
+}
+
+int	has_invalid_map_char(char **map)
 {
 	int	i;
 	int	j;
 
-	// verificar o topo e o fundo do mapa
-	for (j = 0; j < rows; j++)
+	i = 0;
+	while (map[i])
 	{
-		if (map[0][j] != '1' && !is_space(map[0][j]))
-			return (0);
-		if (map[rows - 1][j] != '1' && !is_space(map[rows - 1][j]))
-			return (0);
+		j = 0;
+		while (map[i][j])
+		{
+			if (!is_valid_map_char(map[i][j]))
+				return (1);
+			j++;
+		}
+		i++;
 	}
-	// verificar as laterais do mapa
-	for (i = 0; i < rows; i++)
-	{
-		if (map[i][0] != '1' && !is_space(map[i][0]))
-			return (0);
-		if (map[i][j - 1] != '1' && !is_space(map[i][j - 1]))
-			return (0);
-	}
-	return (1);
+	return (0);
 }

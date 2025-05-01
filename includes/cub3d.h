@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/04/29 13:02:23 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:30:58 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ typedef struct s_config
 }			t_config;
 
 // Parse file
-int			check_extension(const char *filename);
+int			check_extension(const char *filename, char *str_ext);
+int			validate_map_at_end(const char *filename);
 int			is_empty_line(char *line);
 void		parse_exit(char *msg);
 void		capture_map(char *line, t_config *config);
@@ -61,5 +62,6 @@ int			is_texture_valid(char *texture);
 int			check_texture_path(char *path);
 int			is_color_valid(t_color color);
 int			is_map_closed(char **map, int rows);
+int			has_invalid_map_char(char **map);
 
 #endif
