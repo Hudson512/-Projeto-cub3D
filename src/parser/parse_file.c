@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/01 13:39:08 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:25:55 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void print_config(t_config *config)
     int i;
 
     i = 0;
-    printf("North Texture: %s", config->north_texture);
-    printf("South Texture: %s", config->south_texture);
-    printf("West Texture: %s", config->west_texture);
+    printf("North Texture: %s\n", config->north_texture);
+    printf("South Texture: %s\n", config->south_texture);
+    printf("West Texture: %s\n", config->west_texture);
     printf("East Texture: %s\n", config->east_texture);
     printf("Floor Color: %d, %d, %d\n", config->floor_color.r, config->floor_color.g, config->floor_color.b);
     printf("Ceiling Color: %d, %d, %d\n", config->ceiling_color.r, config->ceiling_color.g, config->ceiling_color.b);

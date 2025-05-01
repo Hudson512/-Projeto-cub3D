@@ -1,7 +1,7 @@
-NO ./assets/teste.xpm
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./assets/p_a.xpm
+SO ./assets/teste.xpm
+WE ./assets/teste.xpm
+EA ./assets/teste.xpm
 
 F 220, 12,3
 C 225, 234,30

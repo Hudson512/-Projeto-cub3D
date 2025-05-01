@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:01:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/01 13:46:02 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:22:24 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,6 @@ int	count_lines(char **map)
 int	max_width(char **map)
 {
 	int	i;
-	int	j;
-
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (!is_valid_map_char(map[i][j]))
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
 	int	max;
 
 	i = 0;

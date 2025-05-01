@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:46 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/01 11:32:55 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:24:34 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	main(int argc, char **argv)
 	if (parse_file(argv[1], &config))
 		return (1);
 	// ler o arquivo de configuração
-	//printf("Configurações lidas:\n");
-	//print_config(&config);
+	printf("Configurações lidas:\n");
+	print_config(&config);
 	// Aqui você pode começar a inicializar o MLX e o raycasting usando config
 	free_mem(get_mem_address());
 	return (0);

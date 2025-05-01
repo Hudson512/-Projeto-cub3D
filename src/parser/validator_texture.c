@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator_texture.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:57:04 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/01 13:18:16 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:32:28 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,13 @@ static int	validate_texture_path(void *mlx_ptr, char *path)
 	if (!img)
 	{
 		ft_putstr_fd("Erro ao carregar a textura\n", 2);
+		mlx_destroy_display(mlx_ptr);
+		free(mlx_ptr);
 		return (0);
 	}
 	mlx_destroy_image(mlx_ptr, img);
+	mlx_destroy_display(mlx_ptr);
+	free(mlx_ptr);
 	return (1);
 }
 
@@ -51,8 +55,7 @@ static int	check_image(char *path)
 		ft_putstr_fd("Erro ao inicializar o mlx\n", 2);
 		return (0);
 	}
-	mlx_destroy_display(mlx);
-	free(mlx);
+	
 	return (validate_texture_path(mlx, path));
 }
 
