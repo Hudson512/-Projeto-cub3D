@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+         #
+#    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 15:53:23 by hmateque          #+#    #+#              #
-#    Updated: 2025/05/01 09:33:37 by hmateque         ###   ########.fr        #
+#    Updated: 2025/05/02 11:14:57 by lantonio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS =	src/main.c\
 		src/parser/validator_colors.c\
 		src/parser/validator_map.c\
 		src/parser/validator_texture.c\
+		src/map_render/init_window.c\
 
 
 OBJ_SRC = $(SRCS:.c=.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/01 13:35:16 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:20:47 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 #define FILL 'X'
 #define SPACE ' '
 #define GAP '9'
+
+#define SPEED 10
+#define PI 3.14159265359
 
 # include "../libft/libft.h"
 # include "../mlx_linux/mlx.h"
@@ -51,6 +54,25 @@ typedef struct s_config
 	char	player_dir;
 }			t_config;
 
+typedef struct s_game
+{
+	void		*mlx;
+	void		*mlx_window;
+	int			player_pos_x;
+	int			player_pos_y;
+	float		px;
+	float		py;
+	float		pdx;
+	float		pdy;
+	float		pa;
+	int			screenWidth;
+	int			screenHeight;
+	t_config	config;
+	int			map_x;
+	int			map_y;
+	int			map_s;
+}				t_game;
+
 // Parse file
 int			check_extension(const char *filename, char *str_ext);
 int			validate_map_at_end(const char *filename);
@@ -71,5 +93,8 @@ int			is_color_valid(t_color color);
 int			is_surrounded(char **map, int rows);
 int			is_closed(char **map);
 int			has_invalid_map_char(char **map);
+
+// Window initialization
+void		init_window(t_game *game);
 
 #endif

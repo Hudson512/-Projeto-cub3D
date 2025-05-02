@@ -1,7 +1,7 @@
 NO ./assets/p_a.xpm
-SO ./assets/teste.xpm
-WE ./assets/teste.xpm
-EA ./assets/teste.xpm
+SO ./assets/p_a.xpm
+WE ./assets/p_a.xpm
+EA ./assets/p_a.xpm
 
 F 220, 12,3
 C 225, 234,30
