@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/05 10:05:22 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:11:41 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,8 @@ void	display_view(t_game *game)
 		// Horizontal
 		dof = 0;
 		aTan = -1/tan(ra);
-		rx = game->player_pos_x;
-		ry = game->player_pos_y;
+		rx = game->px;
+		ry = game->py;
 		xo = 64;
 		disH = 1000000;
 		hx = game->px;
@@ -236,9 +236,9 @@ void	display_view(t_game *game)
 void	display_direction(t_game *game)
 {
 	int	line_length = 30;
-	int	end_x = game->player_pos_x + cos(game->pa) * line_length;
-	int	end_y = game->player_pos_y + sin(game->pa) * line_length;
-	draw_line(game, game->player_pos_x, game->player_pos_y, end_x, end_y, 0x00FF00);
+	int	end_x = game->px + cos(game->pa) * line_length;
+	int	end_y = game->py + sin(game->pa) * line_length;
+	draw_line(game, game->px, game->py, end_x, end_y, 0x00FF00);
 }
 
 
@@ -249,19 +249,19 @@ void    display_player(t_game *game)
 		printf("KO conexão\n");
 	if (!game->mlx_window)
 		printf("KO janela\n");
-	if (!game->player_pos_x)
+	if (!game->px)
 		printf("KO x\n");
-	if (!game->player_pos_y)
+	if (!game->py)
 		printf("KO y\n");
-	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x, game->player_pos_y, 0xFF0000);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x + 1, game->player_pos_y, 0xFF0000);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x, game->player_pos_y + 1, 0xFF0000);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x + 1, game->player_pos_y + 1, 0xFF0000);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x + 2, game->player_pos_y, 0xFF0000);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x + 2, game->player_pos_y + 1, 0xFF0000);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x, game->player_pos_y + 2, 0xFF0000);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x + 1, game->player_pos_y + 2, 0xFF0000);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x + 2, game->player_pos_y + 2, 0xFF0000);
+	mlx_pixel_put(game->mlx, game->mlx_window, game->px, game->py, 0xFF0000);
+	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 1, game->py, 0xFF0000);
+	mlx_pixel_put(game->mlx, game->mlx_window, game->px, game->py + 1, 0xFF0000);
+	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 1, game->py + 1, 0xFF0000);
+	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 2, game->py, 0xFF0000);
+	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 2, game->py + 1, 0xFF0000);
+	mlx_pixel_put(game->mlx, game->mlx_window, game->px, game->py + 2, 0xFF0000);
+	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 1, game->py + 2, 0xFF0000);
+	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 2, game->py + 2, 0xFF0000);
 }
 
 int		key_press_handler(int keycode, t_game *game)
@@ -273,9 +273,9 @@ int		key_press_handler(int keycode, t_game *game)
 			game->pa += 2 * PI;
 		game->pdx = cos(game->pa) * SPEED;
 		game->pdy = sin(game->pa) * SPEED;
-		if (game->player_pos_x > 0)
+		if (game->px > 0)
 		{
-			game->player_pos_x -= SPEED;
+			game->px -= SPEED;
 			game->px -= SPEED;
 		}
 	}
@@ -286,9 +286,9 @@ int		key_press_handler(int keycode, t_game *game)
 			game->pa -= 2 * PI;
 		game->pdx = cos(game->pa) * SPEED;
 		game->pdy = sin(game->pa) * SPEED;
-		if (game->player_pos_x < game->screen_width)
+		if (game->px < game->screen_width)
 		{
-			game->player_pos_x += SPEED;
+			game->px += SPEED;
 			game->px += SPEED;
 		}
 	}
@@ -296,9 +296,9 @@ int		key_press_handler(int keycode, t_game *game)
 	{
 		game->px += game->pdx;
 		game->py += game->pdy;
-		if (game->player_pos_y > 0)
+		if (game->py > 0)
 		{
-			game->player_pos_y -= SPEED;
+			game->py -= SPEED;
 			game->py -= SPEED;
 		}
 	}
@@ -306,9 +306,9 @@ int		key_press_handler(int keycode, t_game *game)
 	{
 		game->px -= game->pdx;
 		game->py -= game->pdy;
-		if (game->player_pos_y < game->screen_height)
+		if (game->py < game->screen_height)
 		{
-			game->player_pos_y += SPEED;
+			game->py += SPEED;
 			game->py += SPEED;
 		}
 	}
@@ -344,8 +344,8 @@ void	draw(t_game *game)
 
 void    init_window(t_game *game)
 {
-	game->player_pos_x = 300;
-	game->player_pos_y = 300;
+	game->px = 300;
+	game->py = 300;
 	game->screen_width = 0;
 	game->screen_height = 0;
 	mlx_get_screen_size(game->mlx, &game->screen_width, &game->screen_height);
