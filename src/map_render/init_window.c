@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/02 18:49:27 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:05:22 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	draw(t_game *game);
 
-void draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
+void	draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
 {
 	int dx = abs(x1 - x0);
 	int sx = x0 < x1 ? 1 : -1;
@@ -68,9 +68,15 @@ void	display_map(t_game *game)
 	{
 		for (int x = 0; x < game->map_x; x++) {
 			int tile = map[y * game->map_x + x];
-			draw_square(game, x * game->map_s, y * game->map_s, tile ? 0xFFFFFF : 0x000000, game->map_s);
+			draw_square(game, x * game->map_s, y * game->map_s, tile ? 0xFFFFFF : 0x202020, game->map_s);
 		}
 	}
+}
+
+float distance(float ax, float ay, float bx, float by, float ang)
+{
+	(void)ang;
+	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
 }
 
 void	display_view(t_game *game)
@@ -86,7 +92,14 @@ void	display_view(t_game *game)
 	float	xo;
 	float	yo;
 	float	aTan;
-	char map[] = {
+	float	nTan;
+	float	disH;
+	float	hx;
+	float	hy;
+	float	disV;
+	float	vx;
+	float	vy;
+	int map[] = {
 		1,1,1,1,1,1,1,1,
 		1,0,1,0,0,0,0,1,
 		1,0,1,0,0,0,0,1,
@@ -98,23 +111,35 @@ void	display_view(t_game *game)
 	};
 
 	r = -1;
-	ra = game->pa;
-	while (++r < 1)
+	ra = game->pa - DR * 30;
+	yo = 64;
+	if (ra < 0)
+		ra += 2 * PI;
+	if (ra > 2 * PI)
+		ra -= 2 * PI;
+	while (++r < 60)
 	{
+		// Horizontal
 		dof = 0;
-		aTan = -1 /  tan(ra);
+		aTan = -1/tan(ra);
+		rx = game->player_pos_x;
+		ry = game->player_pos_y;
+		xo = 64;
+		disH = 1000000;
+		hx = game->px;
+		hy = game->py;
 		if (ra > PI)
 		{
-			ry = ((int)game->py >> 6) -0.0001;
+			ry = (((int)game->py >> 6) << 6) - 0.0001;
 			rx = (game->py - ry) * aTan + game->px;
 			yo = -64;
 			xo = -yo * aTan;
 		}
 		if (ra < PI)
 		{
-			ry = ((int)game->py << 6) + 64;
+			ry = (((int)game->py >> 6) << 6) + 64;
 			rx = (game->py - ry) * aTan + game->px;
-			yo = -64;
+			yo = 64;
 			xo = -yo * aTan;
 		}
 		if (ra == 0 || ra == PI)
@@ -123,28 +148,88 @@ void	display_view(t_game *game)
 			ry = game->py;
 			dof = 8;
 		}
-		rx = game->px;
-		ry = game->py;
-		xo = 64;
-		mx = (int)(rx) >> 6;
-		my = (int)(ry) >> 6;
-		mp = my * game->map_x + mx;
-		(void)xo;
 		while (dof < 8)
 		{
 			mx = (int)(rx) >> 6;
 			my = (int)(ry) >> 6;
 			mp = my * game->map_x + mx;
-			if (mp < game->map_x && map[mp] == 1)
+			if (mp > 0 && mp < game->map_x * game->map_y && map[mp] == 1)
+			{
 				dof = 8;
+				hx = rx;
+				hy = ry;
+				disH = distance(game->px, game->py, hx, hy, ra);
+			}
 			else
 			{
 				rx += xo;
 				ry += yo;
 				dof += 1;
 			}
-			draw_line(game, game->px, game->py, rx, ry, 0x000000);
 		}
+		//draw_line(game, game->px, game->py, rx, ry, 0xFF0000);
+
+		// Vertical
+		dof = 0;
+		nTan = -tan(ra);
+		disV = 1000000;
+		vx = game->px;
+		vy = game->py;
+		if (ra > PI2 && ra < PI3)
+		{
+			rx = (((int)game->px >> 6) << 6) - 0.0001;
+			ry = (game->px - rx) * nTan + game->py;
+			xo = -64;
+			yo = -xo * nTan;
+		}
+		if (ra < PI2 || ra > PI3)
+		{
+			rx = (((int)game->px >> 6) << 6) + 64;
+			ry = (game->px - rx) * nTan + game->py;
+			xo = 64;
+			yo = -xo * nTan;
+		}
+		if (ra == 0 || ra == PI)
+		{
+			rx = game->px;
+			ry = game->py;
+			dof = 8;
+		}
+		while (dof < 8)
+		{
+			mx = (int)(rx) >> 6;
+			my = (int)(ry) >> 6;
+			mp = my * game->map_x + mx;
+			if (mp > 0 && mp < game->map_x * game->map_y && map[mp] == 1)
+			{
+				dof = 8;
+				vx = rx;
+				vy = ry;
+				disV = distance(game->px, game->py, vx, vy, ra);
+			}
+			else
+			{
+				rx += xo;
+				ry += yo;
+				dof += 1;
+			}
+		}
+		if (disV < disH)
+		{
+			rx = vx;
+			ry = vy;
+		}
+		else
+		{
+			rx = hx;
+			ry = hy;
+		}
+		draw_line(game, game->px, game->py, rx, ry, 0xFF0000);
+		ra += DR;
+		if (ra < 0)
+			ra += 2 * PI;
+		if (ra > 2 * PI)
+			ra -= 2 * PI;
 	}
 }
 
@@ -172,7 +257,6 @@ void    display_player(t_game *game)
 	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x + 1, game->player_pos_y, 0xFF0000);
 	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x, game->player_pos_y + 1, 0xFF0000);
 	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x + 1, game->player_pos_y + 1, 0xFF0000);
-	
 	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x + 2, game->player_pos_y, 0xFF0000);
 	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x + 2, game->player_pos_y + 1, 0xFF0000);
 	mlx_pixel_put(game->mlx, game->mlx_window, game->player_pos_x, game->player_pos_y + 2, 0xFF0000);
@@ -182,31 +266,7 @@ void    display_player(t_game *game)
 
 int		key_press_handler(int keycode, t_game *game)
 {
-	if (keycode == 'w' || keycode == 'W')
-	{
-		game->px -= game->pdx;
-		game->py -= game->py;
-		if (game->player_pos_y > 0)
-			game->player_pos_y -= SPEED;
-	}
-	else if (keycode == 'd' || keycode == 'D')
-	{
-		//game->pa -= 0.1;
-		if (game->pa > 2 * PI)
-			game->pa += 2 * PI;
-		game->pdx = cos(game->pa) * SPEED;
-		game->pdy = sin(game->pa) * SPEED;
-		if (game->player_pos_x < game->screenWidth)
-			game->player_pos_x += SPEED;
-	}
-	else if (keycode == 's' || keycode == 'S')
-	{
-		game->px += game->pdx;
-		game->py += game->py;
-		if (game->player_pos_y < game->screenHeight)
-			game->player_pos_y += SPEED;
-	}
-	else if (keycode == 'a' || keycode == 'A')
+	if (keycode == 'a' || keycode == 'A')
 	{
 		//game->pa -= 0.1;
 		if (game->pa < 0)
@@ -214,19 +274,56 @@ int		key_press_handler(int keycode, t_game *game)
 		game->pdx = cos(game->pa) * SPEED;
 		game->pdy = sin(game->pa) * SPEED;
 		if (game->player_pos_x > 0)
+		{
 			game->player_pos_x -= SPEED;
+			game->px -= SPEED;
+		}
+	}
+	else if (keycode == 'd' || keycode == 'D')
+	{
+		//game->pa -= 0.1;
+		if (game->pa > 2 * PI)
+			game->pa -= 2 * PI;
+		game->pdx = cos(game->pa) * SPEED;
+		game->pdy = sin(game->pa) * SPEED;
+		if (game->player_pos_x < game->screen_width)
+		{
+			game->player_pos_x += SPEED;
+			game->px += SPEED;
+		}
+	}
+	else if (keycode == 'w' || keycode == 'W')
+	{
+		game->px += game->pdx;
+		game->py += game->pdy;
+		if (game->player_pos_y > 0)
+		{
+			game->player_pos_y -= SPEED;
+			game->py -= SPEED;
+		}
+	}
+	else if (keycode == 's' || keycode == 'S')
+	{
+		game->px -= game->pdx;
+		game->py -= game->pdy;
+		if (game->player_pos_y < game->screen_height)
+		{
+			game->player_pos_y += SPEED;
+			game->py += SPEED;
+		}
 	}
 	else if (keycode == 65361)
 	{
+		
 		game->pa -= 0.1;
 		if (game->pa < 0)
 			game->pa += 2 * PI;
 		game->pdx = cos(game->pa) * SPEED;
 		game->pdy = sin(game->pa) * SPEED;
 	}
-
 	else if (keycode == 65363)
 	{
+		
 		game->pa += 0.1;
 		if (game->pa > 2 * PI)
 			game->pa -= 2 * PI;
@@ -238,7 +335,7 @@ int		key_press_handler(int keycode, t_game *game)
 
 void	draw(t_game *game)
 {
-	//mlx_clear_window(game->mlx, game->mlx_window);
+	mlx_clear_window(game->mlx, game->mlx_window);
 	display_map(game);
 	display_player(game);
 	display_view(game);
@@ -247,16 +344,18 @@ void	draw(t_game *game)
 
 void    init_window(t_game *game)
 {
-	game->player_pos_x = 200;
-	game->player_pos_y = 200;
-	game->screenWidth = 0;
-	game->screenHeight = 0;
-	mlx_get_screen_size(game->mlx, &game->screenWidth, &game->screenHeight);
-	printf("Screen size %dWx%dH\n", game->screenWidth, game->screenHeight);
-	game->screenWidth /= 2;
-	game->screenHeight /= 2;
-	game->mlx_window = mlx_new_window(game->mlx, game->screenWidth, game->screenHeight, "cub3d");
+	game->player_pos_x = 300;
+	game->player_pos_y = 300;
+	game->screen_width = 0;
+	game->screen_height = 0;
+	mlx_get_screen_size(game->mlx, &game->screen_width, &game->screen_height);
+	printf("Screen size %dWx%dH\n", game->screen_width, game->screen_height);
+	game->screen_width /= 2;
+	game->screen_height /= 2;
+	game->mlx_window = mlx_new_window(game->mlx, game->screen_width, game->screen_height, "cub3d");
 	game->pa = 0;
+	game->px = 300;
+	game->py = 300;
 	game->pdx = cos(game->pa) * SPEED;
 	game->pdy = sin(game->pa) * SPEED;
 	draw(game);
