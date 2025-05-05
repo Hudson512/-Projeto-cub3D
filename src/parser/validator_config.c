@@ -6,11 +6,13 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:54:45 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/05 09:08:40 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:20:27 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+int	have_valid_wall(char **map);
 
 void	validator_config(t_config *config)
 {
@@ -28,7 +30,6 @@ void	validator_config(t_config *config)
 		parse_exit("Error\nCor do teto inválida\n");
 	if (has_invalid_map_char(config->map))
 		parse_exit("Error\nMapa abertp ou contém caracteres inválidos\n");
-	if (!is_surrounded(config->map, map_rows(config->map))
-		|| !is_closed(config->map))
-		parse_exit("Map not closed\n");
+	if (have_valid_wall(config->map) == 0)
+		parse_exit("Map not closed 2\n");
 }

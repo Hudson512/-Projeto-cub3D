@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/05 10:11:41 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:18:02 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,6 @@ void	display_direction(t_game *game)
 
 void    display_player(t_game *game)
 {
-	
 	if (!game->mlx)
 		printf("KO conexão\n");
 	if (!game->mlx_window)

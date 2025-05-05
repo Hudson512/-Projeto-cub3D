@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/05 08:49:19 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:17:44 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int			map_rows(char **map);
 int			is_texture_valid(char *texture);
 int			check_texture_path(char *path);
 int			is_color_valid(t_color color);
-int			is_surrounded(char **map, int rows);
-int			is_closed(char **map);
+
+int			free_matrix(char **mat);
 int			has_invalid_map_char(char **map);
 
 // Window initialization

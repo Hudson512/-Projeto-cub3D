@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:16 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/05 09:08:04 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:13:04 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,18 @@ int	is_empty_line(char *line)
 		line++;
 	}
 	return (1);
+}
+
+int	free_matrix(char **mat)
+{
+	int	i;
+
+	i = -1;
+	if (mat != NULL)
+	{
+		while (mat && mat[++i])
+			free(mat[i]);
+		free(mat);
+	}
+	return (i);
 }
