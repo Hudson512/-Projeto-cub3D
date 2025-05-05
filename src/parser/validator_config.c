@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:54:45 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/01 15:20:50 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/05 09:08:40 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	validator_config(t_config *config)
 		parse_exit("Error\nCor do chão inválida\n");
 	if (!is_color_valid(config->ceiling_color))
 		parse_exit("Error\nCor do teto inválida\n");
-    
-	// Verificar se o mapa esta fechado por paredes (1) # Melhorar essa parte amanhã
 	if (has_invalid_map_char(config->map))
-		parse_exit("Error\nMapa não está fechado por paredes ou contém caracteres inválidos\n");
-	// Verifica se o jogador está dentro do mapa
+		parse_exit("Error\nMapa abertp ou contém caracteres inválidos\n");
+	if (!is_surrounded(config->map, map_rows(config->map))
+		|| !is_closed(config->map))
+		parse_exit("Map not closed\n");
 }

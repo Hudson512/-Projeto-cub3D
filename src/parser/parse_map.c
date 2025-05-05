@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/01 13:17:08 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/05 09:07:04 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	capture_map(char *line, t_config *config)
 {
-	if (is_empty_line(line) || ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0
-        || ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0
-        || ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
+	if (is_empty_line(line) || ft_strncmp(line, "NO ", 3) == 0
+		|| ft_strncmp(line, "SO ", 3) == 0
+		|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0
+		|| ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
 		return ;
 	config->map = ft_realloc_map(config->map, line);
 }
@@ -27,7 +28,6 @@ char	**ft_realloc_map(char **old_map, char *new_line)
 	int		i;
 
 	i = 0;
-    
 	while (old_map && old_map[i])
 		i++;
 	new_map = malloc(sizeof(char *) * (i + 2));
@@ -46,9 +46,9 @@ char	**ft_realloc_map(char **old_map, char *new_line)
 	return (new_map);
 }
 
-int map_rows(char **map)
+int	map_rows(char **map)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (map && map[i])

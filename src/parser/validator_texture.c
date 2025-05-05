@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:57:04 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/02 10:01:12 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/02 23:08:45 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	check_texture_path(char *path)
 {
 	int	fd;
+
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
@@ -55,7 +56,6 @@ static int	check_image(char *path)
 		ft_putstr_fd("Erro ao inicializar o mlx\n", 2);
 		return (0);
 	}
-	
 	return (validate_texture_path(mlx, path));
 }
 

@@ -6,22 +6,25 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/02 17:20:47 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/05 08:49:19 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#define WALL '1'
-#define FLOOR '0'
-#define PLAYER_CHARS "NSEW"
-#define FILL 'X'
-#define SPACE ' '
-#define GAP '9'
+# define WALL '1'
+# define FLOOR '0'
+# define PLAYER_CHARS "NSEW"
+# define FILL 'X'
+# define SPACE ' '
+# define GAP '9'
 
-#define SPEED 10
-#define PI 3.14159265359
+# define SPEED 5
+# define PI 3.14159265359
+# define PI2 3.14159265359/2
+# define PI3 3*3.14159265359/2
+# define DR 0.0174533
 
 # include "../libft/libft.h"
 # include "../mlx_linux/mlx.h"
@@ -65,12 +68,12 @@ typedef struct s_game
 	float		pdx;
 	float		pdy;
 	float		pa;
-	int			screenWidth;
-	int			screenHeight;
-	t_config	config;
+	int			screen_width;
+	int			screen_height;
 	int			map_x;
 	int			map_y;
 	int			map_s;
+	t_config	config;
 }				t_game;
 
 // Parse file

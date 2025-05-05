@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:01:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/02 10:01:21 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:02:43 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ int	max_width(char **map)
 {
 	int	i;
 	int	max;
+	int	len;
 
 	i = 0;
 	max = 0;
 	while (map[i])
 	{
-		int len = strlen(map[i]);
+		len = ft_strlen(map[i]);
 		if (len > max)
 			max = len;
 		i++;
@@ -39,86 +40,114 @@ int	max_width(char **map)
 	return (max);
 }
 
-char **normalize_map(char **map, int *out_height, int *out_width) {
-	int h = count_lines(map);
-	int w = max_width(map);
-	*out_height = h;
-	*out_width = w;
-
-	char **normalized = malloc(sizeof(char *) * (h + 1));
-	for (int y = 0; y < h; y++) {
-		normalized[y] = malloc(w + 1);
-		int x = 0;
-		for (; map[y][x]; x++) {
-			char c = map[y][x];
-			if (c == SPACE)
-				normalized[y][x] = GAP;
-			else
-				normalized[y][x] = c;
-		}
-		while (x < w)
-			normalized[y][x++] = GAP;
-		normalized[y][x] = '\0';
-	}
-	normalized[h] = NULL;
-	return normalized;
+void	init_normalize_map(int *height, int *width, char **map)
+{
+	*width = max_width(map);
+	*height = count_lines(map);
 }
 
-int is_player(char c) {
+char	**normalize_map(char **map, int *out_height, int *out_width)
+{
+	char	c;
+	int		pos[2];
+	char	**normalized;
+
+	init_normalize_map(out_height, out_width, map);
+	normalized = malloc(sizeof(char *) * (*out_height + 1));
+	pos[1] = -1;
+	while (++pos[1] < *out_height)
+	{
+		normalized[pos[1]] = malloc(*out_width + 1);
+		pos[0] = -1;
+		while (map[pos[1]][++pos[0]])
+		{
+			c = map[pos[1]][pos[0]];
+			normalized[pos[1]][pos[0]] = c;
+			if (c == SPACE)
+				normalized[pos[1]][pos[0]] = GAP;
+		}
+		while (pos[0] < *out_width)
+			normalized[pos[1]][pos[0]++] = GAP;
+		normalized[pos[1]][pos[0]] = '\0';
+	}
+	normalized[*out_height] = NULL;
+	return (normalized);
+}
+
+int	is_player(char c)
+{
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-int flood_fill(char **map, int x, int y, int width, int height) {
+int	flood_fill(char **map, int x, int y)
+{
+	int	width;
+	int	height;
+
+	width = max_width(map);
+	height = count_lines(map);
 	if (x < 0 || y < 0 || x >= width || y >= height)
-		return 0;
+		return (0);
 	if (map[y][x] == WALL || map[y][x] == FILL)
-		return 1;
+		return (1);
 	if (map[y][x] == GAP)
-		return 0;
-
+		return (0);
 	map[y][x] = FILL;
-
 	return (
-		flood_fill(map, x + 1, y, width, height) &&
-		flood_fill(map, x - 1, y, width, height) &&
-		flood_fill(map, x, y + 1, width, height) &&
-		flood_fill(map, x, y - 1, width, height)
+		flood_fill(map, x + 1, y)
+		&& flood_fill(map, x - 1, y)
+		&& flood_fill(map, x, y + 1)
+		&& flood_fill(map, x, y - 1)
 	);
 }
 
-int is_closed(char **map)
+static void	find_start(char **map, int *dim, int *start)
 {
-	int width, height;
-	char **copy = normalize_map(map, &height, &width);
+	int		pos[2];
+	char	c;
 
-	// Localiza ponto de partida válido (0 ou N/S/E/W)
-	int start_x = -1, start_y = -1;
-	for (int y = 0; y < height && start_x == -1; y++) {
-		for (int x = 0; x < width; x++) {
-			char c = copy[y][x];
-			if (c == FLOOR || is_player(c)) {
-				start_x = x;
-				start_y = y;
-				break;
+	pos[1] = -1;
+	start[0] = -1;
+	start[1] = -1;
+	while (++pos[1] < dim[1] && start[0] == -1)
+	{
+		pos[0] = -1;
+		while (++pos[0] < dim[0])
+		{
+			c = map[pos[1]][pos[0]];
+			if (c == FLOOR || is_player(c))
+			{
+				start[0] = pos[0];
+				start[1] = pos[1];
+				break ;
 			}
 		}
 	}
+}
 
-	int valid = 0;
-	if (start_x != -1)
-		valid = flood_fill(copy, start_x, start_y, width, height);
+int	is_closed(char **map)
+{
+	int		dim[2];
+	int		start[2];
+	int		valid;
+	int		i;
+	char	**copy;
 
-	// liberar memória
-	for (int y = 0; y < height; y++)
-		free(copy[y]);
+	copy = normalize_map(map, &dim[1], &dim[0]);
+	find_start(copy, dim, start);
+	valid = 0;
+	if (start[0] != -1)
+		valid = flood_fill(copy, start[0], start[1]);
+	i = -1;
+	while (++i < dim[1])
+		free(copy[i]);
 	free(copy);
-
-	return valid;
+	return (valid);
 }
 
 int	is_surrounded(char **map, int rows)
 {
-	int	i;
+	int		i;
 	char	*line;
 
 	i = -1;
@@ -136,7 +165,8 @@ int	is_surrounded(char **map, int rows)
 			return (0);
 	i = -1;
 	while (map[rows - 1][++i])
-		if (map[rows - 1][i] != '1' && map[rows - 1][i] != ' ' && map[rows - 1][i] != '\t')
+		if (map[rows - 1][i] != '1' && map[rows - 1][i] != ' '
+			&& map[rows - 1][i] != '\t')
 			return (0);
 	return (1);
 }

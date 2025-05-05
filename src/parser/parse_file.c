@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/01 15:25:55 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/05 09:06:26 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,57 +14,60 @@
 
 #include "../../includes/cub3d.h"
 
-int parse_file(const char *filename, t_config *config)
+int	parse_file(const char *filename, t_config *config)
 {
-    char *line;
-    int fd;
+	char	*line;
+	int		fd;
 
-    config->map = NULL;
-    if (!check_extension(filename, ".cub") || !validate_map_at_end(filename))
-        return (ft_putstr_fd("Error\nArquivo deve ter a extensao .cub ou o mapa deve ser a última parte do arquivo .cub\n", 2), 1);
-    fd = open(filename, O_RDONLY);
-    if (fd < 0)
-        return (ft_putstr_fd("Error\nNao foi possivel abrir o arquivo\n", 2), 1);
-    line = get_next_line(fd);
-    while (line != NULL)
-    {
-        capture_texture(line, config);
-        capture_color(line, config);
-        capture_map(line, config);
-        free(line);
-        line = get_next_line(fd);
-    }
-    close(fd);
-    collect_mem(config->map);
-    validator_config(config);
-    capture_position(config->map, config);
-    return (0);
+	config->map = NULL;
+	if (!check_extension(filename, ".cub") || !validate_map_at_end(filename))
+	{
+		ft_putstr_fd("Error\nArquivo deve ter a extensao ", 2);
+		ft_putstr_fd(".cub ou o mapa deve ser a última ", 2);
+		return (ft_putstr_fd("parte do arquivo .cub\n", 2), 1);
+	}
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (ft_putstr_fd("Error\nNao foi possivel abrir o arquivo\n", 2), 1);
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		(capture_texture(line, config), capture_color(line, config));
+		(capture_map(line, config), free(line));
+		line = get_next_line(fd);
+	}
+	(close(fd), collect_mem(config->map));
+	(validator_config(config), capture_position(config->map, config));
+	return (0);
 }
 
-void print_config(t_config *config)
+void	print_config(t_config *config)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    printf("North Texture: %s\n", config->north_texture);
-    printf("South Texture: %s\n", config->south_texture);
-    printf("West Texture: %s\n", config->west_texture);
-    printf("East Texture: %s\n", config->east_texture);
-    printf("Floor Color: %d, %d, %d\n", config->floor_color.r, config->floor_color.g, config->floor_color.b);
-    printf("Ceiling Color: %d, %d, %d\n", config->ceiling_color.r, config->ceiling_color.g, config->ceiling_color.b);
-    printf("\nMap:\n");
-    while (config->map && config->map[i])
-    {
-        printf("%s", config->map[i]);
-        printf("\n");
-        i++;
-    }
+	i = 0;
+	printf("North Texture: %s\n", config->north_texture);
+	printf("South Texture: %s\n", config->south_texture);
+	printf("West Texture: %s\n", config->west_texture);
+	printf("East Texture: %s\n", config->east_texture);
+	printf("Floor Color: %d, %d, %d\n", config->floor_color.r,
+		config->floor_color.g, config->floor_color.b);
+	printf("Ceiling Color: %d, %d, %d\n", config->ceiling_color.r,
+		config->ceiling_color.g, config->ceiling_color.b);
+	printf("\nMap:\n");
+	while (config->map && config->map[i])
+	{
+		printf("%s", config->map[i]);
+		printf("\n");
+		i++;
+	}
 }
-
 
 static int	is_map_line(char *line)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (line[i] == ' ')
 		i++;
 	return (line[i] == '1');
@@ -74,12 +77,13 @@ int	validate_map_at_end(const char *file_path)
 {
 	int		fd;
 	char	*line;
-	int		in_map = 0;
+	int		in_map;
 
+	in_map = 0;
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
 		return (0);
-    line = get_next_line(fd);
+	line = get_next_line(fd);
 	while (line != NULL)
 	{
 		if (!in_map && is_map_line(line))
@@ -91,9 +95,8 @@ int	validate_map_at_end(const char *file_path)
 			return (0);
 		}
 		free(line);
-        line = get_next_line(fd);
+		line = get_next_line(fd);
 	}
 	close(fd);
 	return (1);
 }
-
