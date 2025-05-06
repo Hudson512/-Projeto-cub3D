@@ -6,34 +6,58 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:13 by hmateque          #+#    #+#             */
-/*   Updated: 2025/04/29 12:14:27 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:41:09 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
+static char	*ft_strdup_texture(const char *s)
+{
+	char	*dest;
+	size_t	len;
+	int		i;
+
+	while (*s == ' ' || *s == '\t')
+		s++;
+	len = ft_strlen(s);
+	dest = ft_calloc(1, len + 1);
+	if (dest == NULL)
+		return (NULL);
+	i = 0;
+	while (s[i] != '\0' && s[i] != '\n')
+	{
+		dest[i] = s[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
 void	capture_texture(char *line, t_config *config)
 {
 	if (is_empty_line(line))
 		return ;
+	while (*line == ' ' || *line == '\t')
+		line++;
 	if (ft_strncmp(line, "NO ", 3) == 0)
 	{
-		config->north_texture = ft_strdup(line + 3);
+		config->north_texture = ft_strdup_texture(line + 3);
 		collect_mem(config->north_texture);
 	}
 	else if (ft_strncmp(line, "SO ", 3) == 0)
 	{
-		config->south_texture = ft_strdup(line + 3);
+		config->south_texture = ft_strdup_texture(line + 3);
 		collect_mem(config->south_texture);
 	}
 	else if (ft_strncmp(line, "WE ", 3) == 0)
 	{
-		config->west_texture = ft_strdup(line + 3);
+		config->west_texture = ft_strdup_texture(line + 3);
 		collect_mem(config->west_texture);
 	}
 	else if (ft_strncmp(line, "EA ", 3) == 0)
 	{
-		config->east_texture = ft_strdup(line + 3);
+		config->east_texture = ft_strdup_texture(line + 3);
 		collect_mem(config->east_texture);
 	}
 }

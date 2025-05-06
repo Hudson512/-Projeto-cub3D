@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator_config.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:54:45 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/05 12:20:27 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:58:29 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ void	validator_config(t_config *config)
 		parse_exit("Error\nCor do chão inválida\n");
 	if (!is_color_valid(config->ceiling_color))
 		parse_exit("Error\nCor do teto inválida\n");
+	print_config(config);
 	if (has_invalid_map_char(config->map))
-		parse_exit("Error\nMapa abertp ou contém caracteres inválidos\n");
+		parse_exit("Mapa contém caracteres inválidos 2\n");
 	if (have_valid_wall(config->map) == 0)
-		parse_exit("Map not closed 2\n");
+		parse_exit("Error\nMapa aberto\n");
 }

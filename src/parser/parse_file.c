@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/05 09:06:26 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:04:43 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@ int	parse_file(const char *filename, t_config *config)
 	int		fd;
 
 	config->map = NULL;
-	if (!check_extension(filename, ".cub") || !validate_map_at_end(filename))
-	{
-		ft_putstr_fd("Error\nArquivo deve ter a extensao ", 2);
-		ft_putstr_fd(".cub ou o mapa deve ser a última ", 2);
-		return (ft_putstr_fd("parte do arquivo .cub\n", 2), 1);
-	}
+	if (!check_extension(filename, ".cub"))
+		return (ft_putstr_fd("Error\nArquivo deve ter a extensao .cub\n", 2), 1);
+	if (!validate_map_at_end(filename))
+		return (ft_putstr_fd("Error\nO mapa deve ser a última parte do arquivo .cub\n", 2), 1);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (ft_putstr_fd("Error\nNao foi possivel abrir o arquivo\n", 2), 1);

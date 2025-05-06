@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator_texture.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:57:04 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/02 23:08:45 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:59:33 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	check_texture_path(char *path)
 {
 	int	fd;
-
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{

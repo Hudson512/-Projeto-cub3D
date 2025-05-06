@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
+#    By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 15:53:23 by hmateque          #+#    #+#              #
-#    Updated: 2025/05/02 11:14:57 by lantonio         ###   ########.fr        #
+#    Updated: 2025/05/06 10:32:32 by hmateque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,9 +67,9 @@ fclean: clean
 re: fclean all
 
 valgrind:
-	valgrind --leak-check=full ./$(NAME) maps/map.cub
+	valgrind --leak-check=full ./$(NAME) maps/valid/subject.cub
 
 valgrind_leaks:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) maps/leaks.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) maps/valid/subject.cub
 
 .PHONY: all clean fclean re
