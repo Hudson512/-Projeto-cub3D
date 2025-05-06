@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/05 12:17:44 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:22:51 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,31 @@ typedef struct s_game
 	int			map_s;
 	t_config	config;
 }				t_game;
+
+typedef struct s_render
+{
+	int		r;
+	int		mx;
+	int		my;
+	int		mp;
+	int		dof;
+	float	rx;
+	float	ry;
+	float	ra;
+	float	xo;
+	float	yo;
+	float	aTan;
+	float	nTan;
+	float	disH;
+	float	hx;
+	float	hy;
+	float	disV;
+	float	vx;
+	float	vy;
+	float	lineH;
+	float	lineO;
+	float	disT;
+}			t_render;
 
 // Parse file
 int			check_extension(const char *filename, char *str_ext);
