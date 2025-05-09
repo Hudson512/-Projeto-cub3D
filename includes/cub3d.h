@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/09 14:44:16 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/09 14:52:43 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,6 @@ int			has_invalid_map_char(char **map);
 
 // Window initialization
 void		init_window(t_game *game);
+void		draw(t_game *game);
 
 #endif

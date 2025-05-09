@@ -6,13 +6,11 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/09 14:07:13 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/09 14:52:01 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-void	draw(t_game *game);
 
 void	draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
 {
@@ -60,7 +58,7 @@ void	draw_square(t_game *game, int x, int y, int color)
 	}
 }
 
-void	display_map(t_game *game, int *map)
+void	draw_map(t_game *game, int *map)
 {
 	int	y;
 	int	x;
@@ -110,7 +108,7 @@ void	draw_3d(t_game *game, t_render render)
 	}
 }
 
-void	display_view(t_game *game, int *map)
+void	draw_3d_view(t_game *game, int *map)
 {
 	t_render	render;
 
@@ -252,7 +250,7 @@ void	display_view(t_game *game, int *map)
 	}
 }
 
-void	display_direction(t_game *game)
+void	draw_pfov(t_game *game)
 {
 	int	line_length;
 	int	end_x;
@@ -265,7 +263,7 @@ void	display_direction(t_game *game)
 		draw_line(game, game->px, game->py, end_x, end_y, 0x00FF00);
 }
 
-void	display_player(t_game *game)
+void	draw_player(t_game *game)
 {
 	int	cor;
 
@@ -382,10 +380,10 @@ void	draw(t_game *game)
 
 	if (CLEAR)
 		mlx_clear_window(game->mlx, game->mlx_w);
-	display_map(game, map);
-	display_player(game);
-	display_direction(game);
-	display_view(game, map);
+	draw_map(game, map);
+	draw_player(game);
+	draw_pfov(game);
+	draw_3d_view(game, map);
 }
 
 void	init_window(t_game *game)
