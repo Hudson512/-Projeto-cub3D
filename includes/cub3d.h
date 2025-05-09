@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/06 11:22:51 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/09 14:44:16 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # define PI2 3.14159265359/2
 # define PI3 3*3.14159265359/2
 # define DR 0.0174533
+
+# define RAY_WIDTH 8
+
+# define DEBUG 0
+# define CLEAR 1
 
 # include "../libft/libft.h"
 # include "../mlx_linux/mlx.h"
@@ -60,7 +65,7 @@ typedef struct s_config
 typedef struct s_game
 {
 	void		*mlx;
-	void		*mlx_window;
+	void		*mlx_w;
 	int			player_pos_x;
 	int			player_pos_y;
 	float		px;
@@ -68,11 +73,13 @@ typedef struct s_game
 	float		pdx;
 	float		pdy;
 	float		pa;
+	float		ca;
 	int			screen_width;
 	int			screen_height;
 	int			map_x;
 	int			map_y;
 	int			map_s;
+	int			player_fov;
 	t_config	config;
 }				t_game;
 
@@ -99,7 +106,18 @@ typedef struct s_render
 	float	lineH;
 	float	lineO;
 	float	disT;
+	int		color;
 }			t_render;
+
+typedef struct s_draw_line
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	e2;
+}		t_draw_line;
 
 // Parse file
 int			check_extension(const char *filename, char *str_ext);

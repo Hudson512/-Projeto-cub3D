@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/06 12:39:29 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/09 14:07:13 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,32 @@ void	draw(t_game *game);
 
 void	draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	e2;
+	t_draw_line	draw_line;
 
-	dx = abs(x1 - x0);
-	sx = -1;
+	draw_line.dx = abs(x1 - x0);
+	draw_line.sx = -1;
 	if (x0 < x1)
-		sx = 1;
-	dy = -abs(y1 - y0);
-	sy = -1;
+		draw_line.sx = 1;
+	draw_line.dy = -abs(y1 - y0);
+	draw_line.sy = -1;
 	if (y0 < y1)
-		sy = 1;
-	err = dx + dy;
+		draw_line.sy = 1;
+	draw_line.err = draw_line.dx + draw_line.dy;
 	while (1)
 	{
-		mlx_pixel_put(game->mlx, game->mlx_window, x0, y0, color);
+		mlx_pixel_put(game->mlx, game->mlx_w, x0, y0, color);
 		if (x0 == x1 && y0 == y1)
 			break ;
-		e2 = 2 * err;
-		if (e2 >= dy)
+		draw_line.e2 = 2 * draw_line.err;
+		if (draw_line.e2 >= draw_line.dy)
 		{
-			err += dy;
-			x0 += sx;
+			draw_line.err += draw_line.dy;
+			x0 += draw_line.sx;
 		}
-		if (e2 <= dx)
+		if (draw_line.e2 <= draw_line.dx)
 		{
-			err += dx;
-			y0 += sy;
+			draw_line.err += draw_line.dx;
+			y0 += draw_line.sy;
 		}
 	}
 }
@@ -57,11 +52,11 @@ void	draw_square(t_game *game, int x, int y, int color)
 	int	j;
 
 	i = -1;
-	while (++i < game->map_s - 1)
+	while (++i < game->map_s)
 	{
 		j = -1;
-		while (++j < game->map_s - 1)
-			mlx_pixel_put(game->mlx, game->mlx_window, x + i, y + j, color);
+		while (++j < game->map_s)
+			mlx_pixel_put(game->mlx, game->mlx_w, x + i, y + j, color);
 	}
 }
 
@@ -85,9 +80,11 @@ void	display_map(t_game *game, int *map)
 			color = 0x202020;
 			if (tile)
 				color = 0xFFFFFF;
-			draw_square(game, x * game->map_s, y * game->map_s, color);
+			if (DEBUG)
+				draw_square(game, x * game->map_s, y * game->map_s, color);
 		}
 	}
+	(void)color;
 }
 
 float	distance(float ax, float ay, float bx, float by)
@@ -95,17 +92,21 @@ float	distance(float ax, float ay, float bx, float by)
 	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
 }
 
-void	draw_3d(t_game *game, int lineO, int lineH, int r)
+void	draw_3d(t_game *game, t_render render)
 {
 	int	i;
 	int	j;
+	int	pos_x;
 
 	i = -1;
-	while (++i < lineH)
+	pos_x = DEBUG ? (game->screen_width / 2) + 32 : 0;
+	while (++i < render.lineH)
 	{
 		j = -1;
-		while (++j < game->map_s)
-			mlx_pixel_put(game->mlx, game->mlx_window, (game->screen_width / 2) + r + j, lineO + i, 0xFF0000);
+		while (++j < RAY_WIDTH)
+			mlx_pixel_put(game->mlx, game->mlx_w,
+				pos_x + render.r * RAY_WIDTH + j,
+				render.lineO + i, render.color);
 	}
 }
 
@@ -120,7 +121,7 @@ void	display_view(t_game *game, int *map)
 		render.ra += 2 * PI;
 	if (render.ra > 2 * PI)
 		render.ra -= 2 * PI;
-	while (++render.r < 60)
+	while (++render.r < game->player_fov)
 	{
 		// Horizontal
 		render.dof = 0;
@@ -157,7 +158,7 @@ void	display_view(t_game *game, int *map)
 			render.my = (int)(render.ry) >> 6;
 			render.mp = render.my * game->map_x + render.mx;
 			if (render.mp > 0 && render.mp < game->map_x * game->map_y
-				&& map[render.mp] == 1)
+				&& map[render.mp] > 0)
 			{
 				render.dof = 8;
 				render.hx = render.rx;
@@ -204,7 +205,7 @@ void	display_view(t_game *game, int *map)
 			render.my = (int)(render.ry) >> 6;
 			render.mp = render.my * game->map_x + render.mx;
 			if (render.mp > 0 && render.mp < game->map_x * game->map_y
-				&& map[render.mp] == 1)
+				&& map[render.mp] > 0)
 			{
 				render.dof = 8;
 				render.vx = render.rx;
@@ -219,36 +220,30 @@ void	display_view(t_game *game, int *map)
 				render.dof += 1;
 			}
 		}
+		render.rx = render.hx;
+		render.ry = render.hy;
+		render.disT = render.disH;
+		render.color = 0xFF0000;
 		if (render.disV < render.disH)
 		{
 			render.rx = render.vx;
 			render.ry = render.vy;
+			render.disT = render.disV;
+			render.color = 0xCC0000;
 		}
-		else
-		{
-			render.rx = render.hx;
-			render.ry = render.hy;
-		}
-		draw_line(game, game->px, game->py, render.rx, render.ry, 0xFF0000);
-		render.lineH = (game->map_s * 320) / render.disT;//3D
-		if (render.lineH > 320)
-			render.lineH = 320;
-		render.lineO = 160 - render.lineH / 2;
-		// desenhar a linha vertical
-		render.disT = render.disV;
-		if (render.disH < render.disV)
-			render.disT = render.disH;
+		if (DEBUG)
+			draw_line(game, game->px, game->py, render.rx, render.ry, 0xFF0000);
+		game->ca = game->pa - render.ra; //3D 
+		if (game->ca < 0)
+			game->ca += 2 * PI;
+		if (game->ca > 2 * PI)
+			game->ca -= 2 * PI;
+		render.disT = render.disT * cos(game->ca);
 		render.lineH = (game->map_s * 320) / render.disT;
 		if (render.lineH > 320)
 			render.lineH = 320;
-		if (render.lineH < 0)
-			render.lineH = 0;
 		render.lineO = 160 - render.lineH / 2;
-		if (render.lineO < 0)
-			render.lineO = 0;
-		if (render.lineO > 320)
-			render.lineO = 320;
-		draw_3d(game, render.lineO, render.lineH, render.r);
+		draw_3d(game, render);
 		render.ra += DR;
 		if (render.ra < 0)
 			render.ra += 2 * PI;
@@ -266,31 +261,31 @@ void	display_direction(t_game *game)
 	line_length = 30;
 	end_x = game->px + cos(game->pa) * line_length;
 	end_y = game->py + sin(game->pa) * line_length;
-	draw_line(game, game->px, game->py, end_x, end_y, 0x00FF00);
+	if (DEBUG)
+		draw_line(game, game->px, game->py, end_x, end_y, 0x00FF00);
 }
 
 void	display_player(t_game *game)
 {
 	int	cor;
 
-	if (!game->mlx)
-		printf("KO conexão\n");
-	if (!game->mlx_window)
-		printf("KO janela\n");
 	if (!game->px)
 		printf("KO x\n");
 	if (!game->py)
 		printf("KO y\n");
 	cor = 0xFF0000;
-	mlx_pixel_put(game->mlx, game->mlx_window, game->px, game->py, cor);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 1, game->py, cor);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->px, game->py + 1, cor);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 1, game->py + 1, cor);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 2, game->py, cor);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 2, game->py + 1, cor);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->px, game->py + 2, cor);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 1, game->py + 2, cor);
-	mlx_pixel_put(game->mlx, game->mlx_window, game->px + 2, game->py + 2, cor);
+	if (DEBUG)
+	{
+		mlx_pixel_put(game->mlx, game->mlx_w, game->px, game->py, cor);
+		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 1, game->py, cor);
+		mlx_pixel_put(game->mlx, game->mlx_w, game->px, game->py + 1, cor);
+		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 1, game->py + 1, cor);
+		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 2, game->py, cor);
+		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 2, game->py + 1, cor);
+		mlx_pixel_put(game->mlx, game->mlx_w, game->px, game->py + 2, cor);
+		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 1, game->py + 2, cor);
+		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 2, game->py + 2, cor);
+	}
 }
 
 void	a_press_handler(t_game *game)
@@ -321,23 +316,19 @@ void	d_press_handler(t_game *game)
 
 void	w_press_handler(t_game *game)
 {
-	game->px += game->pdx;
-	game->py += game->pdy;
 	if (game->py > 0)
 	{
-		game->py -= SPEED;
-		game->py -= SPEED;
+		game->px -= -game->pdx * SPEED;
+		game->py -= -game->pdy * SPEED;
 	}
 }
 
 void	s_press_handler(t_game *game)
 {
-	game->px -= game->pdx;
-	game->py -= game->pdy;
 	if (game->py < game->screen_height)
 	{
-		game->py += SPEED;
-		game->py += SPEED;
+		game->px += -game->pdx * SPEED;
+		game->py += -game->pdy * SPEED;
 	}
 }
 
@@ -362,18 +353,18 @@ void	left_press_handler(t_game *game)
 int	key_press_handler(int keycode, t_game *game)
 {
 	if (keycode == 'a' || keycode == 'A')
-		a_press_handler(game);
+		return (draw(game), a_press_handler(game), 0);
 	else if (keycode == 'd' || keycode == 'D')
-		d_press_handler(game);
+		return (draw(game), d_press_handler(game), 0);
 	else if (keycode == 'w' || keycode == 'W')
-		w_press_handler(game);
+		return (draw(game), w_press_handler(game), 0);
 	else if (keycode == 's' || keycode == 'S')
-		s_press_handler(game);
+		return (draw(game), s_press_handler(game), 0);
 	else if (keycode == 65361)
-		left_press_handler(game);
+		return (draw(game), left_press_handler(game), 0);
 	else if (keycode == 65363)
-		right_press_handler(game);
-	return (draw(game), 0);
+		return (draw(game), right_press_handler(game), 0);
+	return (0);
 }
 
 void	draw(t_game *game)
@@ -389,11 +380,12 @@ void	draw(t_game *game)
 		1, 1, 1, 1, 1, 1, 1, 1,
 	};
 
-	mlx_clear_window(game->mlx, game->mlx_window);
+	if (CLEAR)
+		mlx_clear_window(game->mlx, game->mlx_w);
 	display_map(game, map);
 	display_player(game);
-	display_view(game, map);
 	display_direction(game);
+	display_view(game, map);
 }
 
 void	init_window(t_game *game)
@@ -403,17 +395,18 @@ void	init_window(t_game *game)
 	game->screen_width = 0;
 	game->screen_height = 0;
 	mlx_get_screen_size(game->mlx, &game->screen_width, &game->screen_height);
-	printf("Screen size %dWx%dH\n", game->screen_width, game->screen_height);
+	printf("Screen size: %dWx%dH\n", game->screen_width, game->screen_height);
 	game->screen_width /= 2;
 	game->screen_height /= 2;
-	game->mlx_window = mlx_new_window(game->mlx,
+	game->mlx_w = mlx_new_window(game->mlx,
 			game->screen_width, game->screen_height, "cub3d");
 	game->pa = 0;
 	game->px = 300;
 	game->py = 300;
 	game->pdx = cos(game->pa) * SPEED;
 	game->pdy = sin(game->pa) * SPEED;
+	game->player_fov = 64;
 	draw(game);
-	mlx_hook(game->mlx_window, 2, 1L << 0, key_press_handler, game);
+	mlx_hook(game->mlx_w, 2, 1L << 0, key_press_handler, game);
 	mlx_loop(game->mlx);
 }
