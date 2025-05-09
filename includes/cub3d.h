@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/09 14:52:43 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/09 14:55:17 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,17 @@ int			has_invalid_map_char(char **map);
 
 // Window initialization
 void		init_window(t_game *game);
+
+// Keyboard events handler
+int			key_press_handler(int keycode, t_game *game);
+void		a_press_handler(t_game *game);
+void		w_press_handler(t_game *game);
+void		d_press_handler(t_game *game);
+void		s_press_handler(t_game *game);
+void		right_press_handler(t_game *game);
+void		left_press_handler(t_game *game);
+
+// game drawing
 void		draw(t_game *game);
 
 #endif
