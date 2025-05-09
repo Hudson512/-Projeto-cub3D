@@ -6,15 +6,16 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/09 15:03:59 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:37:41 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-float	distance(float ax, float ay, float bx, float by)
+float	distance(t_render render, t_game *game)
 {
-	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
+	return (sqrt((render.rx - game->px) * (render.rx - game->px)
+			+ (render.ry - game->py) * (render.ry - game->py)));
 }
 
 void	draw_3d_view(t_game *game, int *map)
@@ -70,8 +71,7 @@ void	draw_3d_view(t_game *game, int *map)
 				render.dof = 8;
 				render.hx = render.rx;
 				render.hy = render.ry;
-				render.disH = distance(game->px, game->py,
-						render.hx, render.hy);
+				render.disH = distance(render, game);
 			}
 			else
 			{
@@ -117,8 +117,7 @@ void	draw_3d_view(t_game *game, int *map)
 				render.dof = 8;
 				render.vx = render.rx;
 				render.vy = render.ry;
-				render.disV = distance(game->px, game->py, render.vx,
-						render.vy);
+				render.disV = distance(render, game);
 			}
 			else
 			{
