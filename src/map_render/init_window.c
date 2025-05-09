@@ -6,106 +6,15 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/09 14:56:57 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:03:59 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
-{
-	t_draw_line	draw_line;
-
-	draw_line.dx = abs(x1 - x0);
-	draw_line.sx = -1;
-	if (x0 < x1)
-		draw_line.sx = 1;
-	draw_line.dy = -abs(y1 - y0);
-	draw_line.sy = -1;
-	if (y0 < y1)
-		draw_line.sy = 1;
-	draw_line.err = draw_line.dx + draw_line.dy;
-	while (1)
-	{
-		mlx_pixel_put(game->mlx, game->mlx_w, x0, y0, color);
-		if (x0 == x1 && y0 == y1)
-			break ;
-		draw_line.e2 = 2 * draw_line.err;
-		if (draw_line.e2 >= draw_line.dy)
-		{
-			draw_line.err += draw_line.dy;
-			x0 += draw_line.sx;
-		}
-		if (draw_line.e2 <= draw_line.dx)
-		{
-			draw_line.err += draw_line.dx;
-			y0 += draw_line.sy;
-		}
-	}
-}
-
-void	draw_square(t_game *game, int x, int y, int color)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (++i < game->map_s)
-	{
-		j = -1;
-		while (++j < game->map_s)
-			mlx_pixel_put(game->mlx, game->mlx_w, x + i, y + j, color);
-	}
-}
-
-void	draw_map(t_game *game, int *map)
-{
-	int	y;
-	int	x;
-	int	tile;
-	int	color;
-
-	game->map_x = 8;
-	game->map_y = 8;
-	game->map_s = 64;
-	y = -1;
-	while (++y < game->map_y)
-	{
-		x = -1;
-		while (++x < game->map_x)
-		{
-			tile = map[y * game->map_x + x];
-			color = 0x202020;
-			if (tile)
-				color = 0xFFFFFF;
-			if (DEBUG)
-				draw_square(game, x * game->map_s, y * game->map_s, color);
-		}
-	}
-	(void)color;
-}
-
 float	distance(float ax, float ay, float bx, float by)
 {
 	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
-}
-
-void	draw_3d(t_game *game, t_render render)
-{
-	int	i;
-	int	j;
-	int	pos_x;
-
-	i = -1;
-	pos_x = DEBUG ? (game->screen_width / 2) + 32 : 0;
-	while (++i < render.lineH)
-	{
-		j = -1;
-		while (++j < RAY_WIDTH)
-			mlx_pixel_put(game->mlx, game->mlx_w,
-				pos_x + render.r * RAY_WIDTH + j,
-				render.lineO + i, render.color);
-	}
 }
 
 void	draw_3d_view(t_game *game, int *map)
@@ -247,42 +156,6 @@ void	draw_3d_view(t_game *game, int *map)
 			render.ra += 2 * PI;
 		if (render.ra > 2 * PI)
 			render.ra -= 2 * PI;
-	}
-}
-
-void	draw_pfov(t_game *game)
-{
-	int	line_length;
-	int	end_x;
-	int	end_y;
-
-	line_length = 30;
-	end_x = game->px + cos(game->pa) * line_length;
-	end_y = game->py + sin(game->pa) * line_length;
-	if (DEBUG)
-		draw_line(game, game->px, game->py, end_x, end_y, 0x00FF00);
-}
-
-void	draw_player(t_game *game)
-{
-	int	cor;
-
-	if (!game->px)
-		printf("KO x\n");
-	if (!game->py)
-		printf("KO y\n");
-	cor = 0xFF0000;
-	if (DEBUG)
-	{
-		mlx_pixel_put(game->mlx, game->mlx_w, game->px, game->py, cor);
-		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 1, game->py, cor);
-		mlx_pixel_put(game->mlx, game->mlx_w, game->px, game->py + 1, cor);
-		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 1, game->py + 1, cor);
-		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 2, game->py, cor);
-		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 2, game->py + 1, cor);
-		mlx_pixel_put(game->mlx, game->mlx_w, game->px, game->py + 2, cor);
-		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 1, game->py + 2, cor);
-		mlx_pixel_put(game->mlx, game->mlx_w, game->px + 2, game->py + 2, cor);
 	}
 }
 

@@ -6,7 +6,7 @@
 #    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 15:53:23 by hmateque          #+#    #+#              #
-#    Updated: 2025/05/09 14:59:42 by lantonio         ###   ########.fr        #
+#    Updated: 2025/05/09 15:07:10 by lantonio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ SRCS =	src/main.c\
 		src/map_render/init_window.c\
 		src/map_render/player_moves.c\
 		src/map_render/events_handler.c\
+		src/map_render/draw.c\
+		src/map_render/draw_2.c\
 
 
 OBJ_SRC = $(SRCS:.c=.o)

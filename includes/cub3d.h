@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/09 14:55:17 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:08:53 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # define RAY_WIDTH 8
 
-# define DEBUG 0
+# define DEBUG 1
 # define CLEAR 1
 
 # include "../libft/libft.h"
@@ -154,5 +154,11 @@ void		left_press_handler(t_game *game);
 
 // game drawing
 void		draw(t_game *game);
+void		draw_line(t_game *game, int x0, int y0, int x1, int y1, int color);
+void		draw_square(t_game *game, int x, int y, int color);
+void		draw_map(t_game *game, int *map);
+void		draw_3d(t_game *game, t_render render);
+void		draw_pfov(t_game *game);
+void		draw_player(t_game *game);
 
 #endif
