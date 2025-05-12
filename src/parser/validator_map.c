@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   validator_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:01:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/05 12:20:51 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/12 10:18:43 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	check_around(char **map, int x, int y);
-
+// Verifica se o caractere é um dos válidos para o mapa
 static int	is_valid_map_char(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W'
@@ -39,6 +38,10 @@ int	has_invalid_map_char(char **map)
 	}
 	return (0);
 }
+// Fim da verificação de caracteres inválidos
+
+// Verifica se a linha tem paredes horizontais
+int	check_around(char **map, int x, int y);
 
 int	ft_countline(char **map)
 {
