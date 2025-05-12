@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
+#    By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 15:53:23 by hmateque          #+#    #+#              #
-#    Updated: 2025/05/09 15:07:10 by lantonio         ###   ########.fr        #
+#    Updated: 2025/05/12 10:41:04 by hmateque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,9 @@ fclean: clean
 	$(MAKE) fclean -C $(Libft_DIR)
 
 re: fclean all
+
+test:
+	./test_maps.sh
 
 valgrind:
 	valgrind --leak-check=full ./$(NAME) maps/valid/subject.cub

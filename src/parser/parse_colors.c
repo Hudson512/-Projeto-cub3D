@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:06 by hmateque          #+#    #+#             */
-/*   Updated: 2025/04/29 12:25:36 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:20:22 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,21 @@ void	capture_color(char *line, t_config *config)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	if (is_empty_line(line))
 		return ;
-	while (line[i] == ' ')
+	while (line[i] == ' ' || line[i] == '\t')
 		i++;
-	if (line[0] == 'F')
+	if (line[i] == 'F')
 	{
+		i++;
 		config->floor_color.r = parse_number(line, &i);
 		config->floor_color.g = parse_number(line, &i);
 		config->floor_color.b = parse_number(line, &i);
 	}
-	else if (line[0] == 'C')
+	else if (line[i] == 'C')
 	{
+		i++;
 		config->ceiling_color.r = parse_number(line, &i);
 		config->ceiling_color.g = parse_number(line, &i);
 		config->ceiling_color.b = parse_number(line, &i);

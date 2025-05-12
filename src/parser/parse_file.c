@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/06 12:04:43 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:35:52 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,38 @@
 
 #include "../../includes/cub3d.h"
 
+static void	init_config(t_config *config)
+{
+	config->north_texture = NULL;
+	config->south_texture = NULL;
+	config->east_texture = NULL;
+	config->west_texture = NULL;
+	config->floor_color.r = -1;
+	config->floor_color.g = -1;
+	config->floor_color.b = -1;
+	config->ceiling_color.r = -1;
+	config->ceiling_color.g = -1;
+	config->ceiling_color.b = -1;
+	config->map = NULL;
+	config->player_x = 0;
+	config->player_y = 0;
+	config->player_dir = '\0';
+}
+
 int	parse_file(const char *filename, t_config *config)
 {
 	char	*line;
 	int		fd;
 
-	config->map = NULL;
+	init_config(config);
 	if (!check_extension(filename, ".cub"))
 		return (ft_putstr_fd("Error\nArquivo deve ter a extensao .cub\n", 2), 1);
 	if (!validate_map_at_end(filename))
-		return (ft_putstr_fd("Error\nO mapa deve ser a última parte do arquivo .cub\n", 2), 1);
+		return (ft_putstr_fd("Error\nMapa não é a última parte do arquivo .cub\n", 2), 1);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (ft_putstr_fd("Error\nNao foi possivel abrir o arquivo\n", 2), 1);
+		return (ft_putstr_fd("Error\nNao foi possivel abrir o arquivo\n", 2),
+			1);
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
