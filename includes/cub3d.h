@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 10:09:01 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:36:02 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 # define DEBUG 1
 # define CLEAR 1
+# define AUTOWIDTH 0
 
 # include "../libft/libft.h"
 # include "../mlx_linux/mlx.h"
@@ -136,6 +137,7 @@ int			map_rows(char **map);
 int			is_texture_valid(char *texture);
 int			check_texture_path(char *path);
 int			is_color_valid(t_color color);
+int			have_valid_wall(char **map);
 
 int			free_matrix(char **mat);
 int			has_invalid_map_char(char **map);

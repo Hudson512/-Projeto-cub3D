@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 10:48:15 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:38:20 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	capture_map(char *line, t_config *config)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (line == NULL)
 		return ;

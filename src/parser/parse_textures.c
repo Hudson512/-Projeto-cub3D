@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:13 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 10:56:20 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:38:57 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*ft_strdup_texture(const char *s)
 void	capture_texture(char *line, t_config *config)
 {
 	char	*tmp;
-	
+
 	tmp = line;
 	while (*tmp == ' ' || *tmp == '\t')
 		tmp++;

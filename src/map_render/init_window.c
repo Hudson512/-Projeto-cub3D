@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/09 16:22:25 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:41:18 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,12 +183,16 @@ void	init_window(t_game *game)
 {
 	game->px = 300;
 	game->py = 300;
-	game->screen_width = 0;
-	game->screen_height = 0;
-	mlx_get_screen_size(game->mlx, &game->screen_width, &game->screen_height);
+	game->screen_width = 1024;
+	game->screen_height = 512;
+	if (AUTOWIDTH)
+	{
+		mlx_get_screen_size(game->mlx, &game->screen_width,
+			&game->screen_height);
+		game->screen_width /= 2;
+		game->screen_height /= 2;
+	}
 	printf("Screen size: %dWx%dH\n", game->screen_width, game->screen_height);
-	game->screen_width /= 2;
-	game->screen_height /= 2;
 	game->mlx_w = mlx_new_window(game->mlx,
 			game->screen_width, game->screen_height, "cub3d");
 	game->pa = 0;

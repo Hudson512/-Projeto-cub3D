@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:46 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 10:13:53 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:56:55 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_config	config;
-	//t_game		game;
+	t_game		game;
 
 	if (argc != 2)
 	{
@@ -24,11 +24,11 @@ int	main(int argc, char **argv)
 	}
 	if (parse_file(argv[1], &config))
 		return (1);
-	printf("Configurações lidas:\n");
-	print_config(&config);
-	// game.mlx = mlx_init();
-	// game.config = config;
-	// init_window(&game);
+	//printf("Configurações lidas:\n");
+	//print_config(&config);
+	game.mlx = mlx_init();
+	game.config = config;
+	init_window(&game);
 	free_mem(get_mem_address());
 	return (0);
 }
