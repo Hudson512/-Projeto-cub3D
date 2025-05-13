@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:03:26 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/09 15:06:04 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:34:20 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	draw_3d(t_game *game, t_render render)
 	i = -1;
 	pos_x = 0;
 	if (DEBUG)
-		pos_x = (game->screen_width / 2) + 32;
+		pos_x = (game->screen_width / 2);
 	while (++i < render.lineH)
 	{
 		j = -1;

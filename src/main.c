@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:46 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 11:52:20 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/13 09:54:22 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	main(int argc, char **argv)
 	}
 	if (parse_file(argv[1], &config))
 		return (1);
-	// printf("Configurações lidas:\n");
-	// print_config(&config);
+	//printf("Configurações lidas:\n");
+	//print_config(&config);
 	game.mlx = mlx_init();
 	game.config = config;
 	init_window(&game);

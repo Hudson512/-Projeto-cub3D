@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:58:57 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/09 14:59:24 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:15:21 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ void	left_press_handler(t_game *game)
 int	key_press_handler(int keycode, t_game *game)
 {
 	if (keycode == 'a' || keycode == 'A')
-		return (draw(game), a_press_handler(game), 0);
+		return (a_press_handler(game), draw(game), 0);
 	else if (keycode == 'd' || keycode == 'D')
-		return (draw(game), d_press_handler(game), 0);
+		return (d_press_handler(game), draw(game), 0);
 	else if (keycode == 'w' || keycode == 'W')
-		return (draw(game), w_press_handler(game), 0);
+		return (w_press_handler(game), draw(game), 0);
 	else if (keycode == 's' || keycode == 'S')
-		return (draw(game), s_press_handler(game), 0);
+		return (s_press_handler(game), draw(game), 0);
 	else if (keycode == 65361)
-		return (draw(game), left_press_handler(game), 0);
+		return (left_press_handler(game), draw(game), 0);
 	else if (keycode == 65363)
-		return (draw(game), right_press_handler(game), 0);
+		return (right_press_handler(game), draw(game), 0);
 	return (0);
 }
