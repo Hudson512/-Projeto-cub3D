@@ -3,205 +3,229 @@
 /*                                                        :::      ::::::::   */
 /*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/12 15:41:18 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/16 12:22:51 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-float	distance(t_render render, t_game *game)
+// Função para lidar com o evento de fechar a janela (clicar no 'X')
+static int close_window_x(t_game *game)
 {
-	return (sqrt((render.rx - game->px) * (render.rx - game->px)
-			+ (render.ry - game->py) * (render.ry - game->py)));
+    if (game && game->mlx && game->mlx_w){
+        mlx_destroy_window(game->mlx, game->mlx_w);
+    }
+	sucess_exit("Janela fechada!\n");
+    exit(0);
+    return (0);
 }
 
-void	draw_3d_view(t_game *game, int *map)
+static void init_player_direction(t_game *game)
 {
-	t_render	render;
+    if (!game)
+        return;
 
-	render.r = -1;
-	render.ra = game->pa - DR * 30;
-	render.yo = 64;
-	if (render.ra < 0)
-		render.ra += 2 * PI;
-	if (render.ra > 2 * PI)
-		render.ra -= 2 * PI;
-	while (++render.r < game->player_fov)
-	{
-		// Horizontal
-		render.dof = 0;
-		render.aTan = -1 / tan(render.ra);
-		render.rx = game->px;
-		render.ry = game->py;
-		render.xo = 64;
-		render.disH = 1000000;
-		render.hx = game->px;
-		render.hy = game->py;
-		if (render.ra > PI)
-		{
-			render.ry = (((int)game->py >> 6) << 6) - 0.0001;
-			render.rx = (game->py - render.ry) * render.aTan + game->px;
-			render.yo = -64;
-			render.xo = -render.yo * render.aTan;
-		}
-		if (render.ra < PI)
-		{
-			render.ry = (((int)game->py >> 6) << 6) + 64;
-			render.rx = (game->py - render.ry) * render.aTan + game->px;
-			render.yo = 64;
-			render.xo = -render.yo * render.aTan;
-		}
-		if (render.ra == 0 || render.ra == PI)
-		{
-			render.rx = game->px;
-			render.ry = game->py;
-			render.dof = 8;
-		}
-		while (render.dof < 8)
-		{
-			render.mx = (int)(render.rx) >> 6;
-			render.my = (int)(render.ry) >> 6;
-			render.mp = render.my * game->map_x + render.mx;
-			if (render.mp > 0 && render.mp < game->map_x * game->map_y
-				&& map[render.mp] > 0)
-			{
-				render.dof = 8;
-				render.hx = render.rx;
-				render.hy = render.ry;
-				render.disH = distance(render, game);
-			}
-			else
-			{
-				render.rx += render.xo;
-				render.ry += render.yo;
-				render.dof += 1;
-			}
-		}
-		//draw_line(game, game->px, game->py, render.rx, render.ry, 0xFF0000);
-		render.dof = 0; // Vertical
-		render.nTan = -tan(render.ra);
-		render.disV = 1000000;
-		render.vx = game->px;
-		render.vy = game->py;
-		if (render.ra > PI2 && render.ra < PI3)
-		{
-			render.rx = (((int)game->px >> 6) << 6) - 0.0001;
-			render.ry = (game->px - render.rx) * render.nTan + game->py;
-			render.xo = -64;
-			render.yo = -render.xo * render.nTan;
-		}
-		if (render.ra < PI2 || render.ra > PI3)
-		{
-			render.rx = (((int)game->px >> 6) << 6) + 64;
-			render.ry = (game->px - render.rx) * render.nTan + game->py;
-			render.xo = 64;
-			render.yo = -render.xo * render.nTan;
-		}
-		if (render.ra == 0 || render.ra == PI)
-		{
-			render.rx = game->px;
-			render.ry = game->py;
-			render.dof = 8;
-		}
-		while (render.dof < 8)
-		{
-			render.mx = (int)(render.rx) >> 6;
-			render.my = (int)(render.ry) >> 6;
-			render.mp = render.my * game->map_x + render.mx;
-			if (render.mp > 0 && render.mp < game->map_x * game->map_y
-				&& map[render.mp] > 0)
-			{
-				render.dof = 8;
-				render.vx = render.rx;
-				render.vy = render.ry;
-				render.disV = distance(render, game);
-			}
-			else
-			{
-				render.rx += render.xo;
-				render.ry += render.yo;
-				render.dof += 1;
-			}
-		}
-		render.rx = render.hx;
-		render.ry = render.hy;
-		render.disT = render.disH;
-		render.color = 0xFF0000;
-		if (render.disV < render.disH)
-		{
-			render.rx = render.vx;
-			render.ry = render.vy;
-			render.disT = render.disV;
-			render.color = 0xCC0000;
-		}
-		if (DEBUG)
-			draw_line(game, game->px, game->py, render.rx, render.ry, 0xFF0000);
-		game->ca = game->pa - render.ra; //3D 
-		if (game->ca < 0)
-			game->ca += 2 * PI;
-		if (game->ca > 2 * PI)
-			game->ca -= 2 * PI;
-		render.disT = render.disT * cos(game->ca);
-		render.lineH = (game->map_s * 320) / render.disT;
-		if (render.lineH > 320)
-			render.lineH = 320;
-		render.lineO = 160 - render.lineH / 2;
-		draw_3d(game, render);
-		render.ra += DR;
-		if (render.ra < 0)
-			render.ra += 2 * PI;
-		if (render.ra > 2 * PI)
-			render.ra -= 2 * PI;
-	}
+    // Definir velocidades (ajuste conforme necessário)
+    game->move_speed = 0.05; // Quão rápido o jogador se move por frame/keypress
+    game->rot_speed = 0.03;  // Quão rápido o jogador gira por frame/keypress
+
+    if (game->config.player_dir == 'N')
+    {
+        game->dir_x = 0;
+        game->dir_y = -1; // Olhando para cima no mapa (Y negativo)
+        game->plane_x = 0.66;
+        game->plane_y = 0;
+    }
+    else if (game->config.player_dir == 'S')
+    {
+        game->dir_x = 0;
+        game->dir_y = 1;  // Olhando para baixo no mapa (Y positivo)
+        game->plane_x = -0.66; // Invertido em relação a 'N'
+        game->plane_y = 0;
+    }
+    else if (game->config.player_dir == 'W') // Oeste
+    {
+        game->dir_x = -1; // Olhando para a esquerda no mapa (X negativo)
+        game->dir_y = 0;
+        game->plane_x = 0;
+        game->plane_y = -0.66; // Note a troca e o sinal para manter perpendicularidade
+    }
+    else if (game->config.player_dir == 'E') // Leste
+    {
+        game->dir_x = 1;  // Olhando para a direita no mapa (X positivo)
+        game->dir_y = 0;
+        game->plane_x = 0;
+        game->plane_y = 0.66;
+    }
 }
 
-void	draw(t_game *game)
+void my_mlx_pixel_put_to_image(t_game *game, int x, int y, int color)
 {
-	int	map[] = {
-		1, 1, 1, 1, 1, 1, 1, 1,
-		1, 0, 1, 0, 0, 0, 0, 1,
-		1, 0, 1, 0, 0, 0, 0, 1,
-		1, 0, 1, 0, 0, 0, 0, 1,
-		1, 0, 0, 0, 0, 0, 0, 1,
-		1, 0, 0, 0, 0, 1, 0, 1,
-		1, 0, 0, 0, 0, 0, 0, 1,
-		1, 1, 1, 1, 1, 1, 1, 1,
-	};
+    char *dst;
 
-	if (CLEAR)
-		mlx_clear_window(game->mlx, game->mlx_w);
-	draw_map(game, map);
-	draw_player(game);
-	draw_pfov(game);
-	draw_3d_view(game, map);
+    if (!game || !game->screen_image.addr)
+        return;
+
+    // Verifica se x e y estão dentro dos limites da imagem para evitar segfault
+    if (x < 0 || x >= game->win_width || y < 0 || y >= game->win_height)
+        return;
+
+    dst = game->screen_image.addr + (y * game->screen_image.line_length + x * (game->screen_image.bits_per_pixel / 8));
+    *(unsigned int*)dst = color;
 }
+
+static void player_move(t_game *game, double move_x_component, double move_y_component)
+{
+    double new_player_x;
+    double new_player_y;
+    int map_check_x;
+    int map_check_y;
+
+    // Verifica se os ponteiros e o mapa são válidos
+    if (!game || !game->config.map)
+        return;
+
+    // Calcula a nova posição potencial do jogador
+    new_player_x = game->config.player_x + move_x_component;
+    new_player_y = game->config.player_y + move_y_component;
+
+    // Determina a célula do mapa para verificar a colisão
+    map_check_x = (int)new_player_x;
+    map_check_y = (int)new_player_y;
+
+    // Verificação de colisão:
+    // 1. Verifica se a nova posição está dentro dos limites do mapa.
+    // 2. Verifica se a linha game->config.map[map_check_y] é válida.
+    // 3. Verifica se a coluna map_check_x é válida para a linha atual.
+    // 4. Verifica se a célula de destino não é uma parede ('1').
+    if (map_check_y >= 0 && map_check_y < game->config.map_height &&
+        game->config.map[map_check_y] != NULL && // Garante que a linha do mapa foi alocada
+        map_check_x >= 0 && map_check_x < (int)ft_strlen(game->config.map[map_check_y]) && // Usa ft_strlen para a largura real da linha
+        game->config.map[map_check_y][map_check_x] != '1')
+    {
+        // Se não houver colisão, atualiza a posição do jogador
+        game->config.player_x = new_player_x;
+        game->config.player_y = new_player_y;
+    }
+    // Opcional: Implementar "deslizamento de parede" aqui.
+    // Se a verificação acima falhar, você pode tentar mover apenas no eixo X
+    // e depois (ou independentemente) apenas no eixo Y.
+    // Isso permite que o jogador deslize ao longo das paredes em vez de parar completamente.
+    // Por simplicidade, esta versão básica para ao encontrar um obstáculo na direção do movimento.
+}
+
+static void player_rotate(t_game *game, double angle)
+{
+    double old_dir_x;
+    double old_plane_x;
+
+    if (!game)
+        return;
+
+    // Rotaciona o vetor de direção
+    old_dir_x = game->dir_x;
+    game->dir_x = game->dir_x * cos(angle) - game->dir_y * sin(angle);
+    game->dir_y = old_dir_x * sin(angle) + game->dir_y * cos(angle);
+
+    // Rotaciona o vetor do plano da câmera
+    old_plane_x = game->plane_x;
+    game->plane_x = game->plane_x * cos(angle) - game->plane_y * sin(angle);
+    game->plane_y = old_plane_x * sin(angle) + game->plane_y * cos(angle);
+}
+
+
+int handle_keypress(int keycode, t_game *game)
+{
+    if (!game) // Verificação de segurança
+        return (1);
+
+    // Descomente a linha abaixo para descobrir os keycodes no seu sistema ao pressionar teclas
+    // printf("Key pressed: %d\n", keycode);
+
+    if (keycode == KEY_ESC)
+        close_window_x(game); // Reutiliza sua função para fechar a janela
+    else if (keycode == KEY_W) // Mover para frente
+        player_move(game, game->dir_x * game->move_speed, game->dir_y * game->move_speed);
+    else if (keycode == KEY_S) // Mover para trás
+        player_move(game, -game->dir_x * game->move_speed, -game->dir_y * game->move_speed);
+    else if (keycode == KEY_A) // Strafe para a esquerda (movimento lateral)
+        // Para strafe, move-se ao longo do vetor do plano da câmera
+        player_move(game, -game->plane_x * game->move_speed, -game->plane_y * game->move_speed);
+    else if (keycode == KEY_D) // Strafe para a direita
+        player_move(game, game->plane_x * game->move_speed, game->plane_y * game->move_speed);
+    else if (keycode == KEY_LEFT_ARROW) // Rotacionar para a esquerda
+        player_rotate(game, -game->rot_speed); // Ângulo negativo para rotação anti-horária
+    else if (keycode == KEY_RIGHT_ARROW) // Rotacionar para a direita
+        player_rotate(game, game->rot_speed);  // Ângulo positivo para rotação horária
+    else
+        return (0); // Se não for uma tecla de interesse, não faz nada e não redesenha
+
+    // Após qualquer movimento ou rotação que altere o estado do jogador,
+    // é crucial redesenhar a cena para que as mudanças sejam visíveis.
+    render_next_frame(game);
+
+    return (0); // Indica que o evento foi processado com sucesso
+}
+
 
 void	init_window(t_game *game)
 {
-	game->px = 300;
-	game->py = 300;
-	game->screen_width = 1024;
-	game->screen_height = 512;
-	if (AUTOWIDTH)
+    int screen_w;
+	int screen_h;
+	int window_w;
+	int window_h;
+
+    // Obter tamanho máximo da tela
+    mlx_get_screen_size(game->mlx, &screen_w, &screen_h);
+
+    // Calcular o tamanho desejado da janela com base no mapa
+	window_w = game->config.map_width * TILE_SIZE;
+	window_h = game->config.map_height * TILE_SIZE;
+
+	// Garantir que a janela não ultrapasse a tela
+	if (window_w > screen_w)
+		window_w = screen_w;
+	if (window_h > screen_h)
+		window_h = screen_h;
+    // Inicializar a janela MLX (estava faltando)
+    game->mlx_w = mlx_new_window(game->mlx, window_w, window_h, "Cub3D");
+    if (!game->mlx_w)
+    {
+        error_exit("Erro\n ao criar janela\n");
+    }
+    
+	init_player_direction(game);
+	
+	// Definir dimensões da janela
+	game->win_width = game->config.map_width * TILE_SIZE;
+	game->win_height = game->config.map_height * TILE_SIZE;
+
+	// Criar imagem para o renderizador
+	game->screen_image.img_ptr = mlx_new_image(game->mlx, game->win_width, game->win_height);
+	if (!game->screen_image.img_ptr)
 	{
-		mlx_get_screen_size(game->mlx, &game->screen_width,
-			&game->screen_height);
-		game->screen_width /= 2;
-		game->screen_height /= 2;
+	    error_exit("Erro\n ao criar imagem\n");
 	}
-	printf("Screen size: %dWx%dH\n", game->screen_width, game->screen_height);
-	game->mlx_w = mlx_new_window(game->mlx,
-			game->screen_width, game->screen_height, "cub3d");
-	game->pa = 0;
-	game->px = 300;
-	game->py = 300;
-	game->pdx = cos(game->pa) * SPEED;
-	game->pdy = sin(game->pa) * SPEED;
-	game->player_fov = 64;
-	draw(game);
-	mlx_hook(game->mlx_w, 2, 1L << 0, key_press_handler, game);
+	
+	game->screen_image.addr = mlx_get_data_addr(game->screen_image.img_ptr,
+											&game->screen_image.bits_per_pixel,
+											&game->screen_image.line_length,
+											&game->screen_image.endian);
+	if (!game->screen_image.addr)
+	{
+	    error_exit("Erro\n ao obter endereço de dados da imagem\n");
+	}
+	
+	// Configurar hooks
+	mlx_hook(game->mlx_w, 17, 0, close_window_x, game);
+    mlx_hook(game->mlx_w, 2, 1L << 0, handle_keypress, game);
+	
+	// Renderizar o primeiro frame
+	render_next_frame(game);
+	
+	// Iniciar o loop do MLX
 	mlx_loop(game->mlx);
 }

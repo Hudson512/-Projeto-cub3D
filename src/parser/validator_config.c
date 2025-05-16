@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator_config.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:54:45 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 15:36:17 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:47:31 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,8 @@ void	validator_config(t_config *config)
 		parse_exit("Mapa contém caracteres inválidos 2\n");
 	if (have_valid_wall(config->map) == 0)
 		parse_exit("Error\nMapa aberto\n");
+	config->map_height = map_rows(config->map);
+	config->map_width = map_cols(config->map);
+	if (config->map_width == 0 || config->map_height == 0)
+		parse_exit("Error\nMapa vazio\n");
 }

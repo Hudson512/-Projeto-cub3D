@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 15:38:02 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:36:50 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	init_config(t_config *config)
 	config->ceiling_color.g = -1;
 	config->ceiling_color.b = -1;
 	config->map = NULL;
+	config->map_width = 0;
+	config->map_height = 0;
 	config->player_x = 0;
 	config->player_y = 0;
 	config->player_dir = '\0';

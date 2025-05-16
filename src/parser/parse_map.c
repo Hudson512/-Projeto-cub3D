@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 15:38:20 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:49:28 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,20 @@ int	map_rows(char **map)
 	while (map && map[i])
 		i++;
 	return (i);
+}
+
+int map_cols(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (map && map[i])
+	{
+		if ((int)ft_strlen(map[i]) > j)
+			j = ft_strlen(map[i]);
+		i++;
+	}
+	return (j);
 }

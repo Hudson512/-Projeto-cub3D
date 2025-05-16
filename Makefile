@@ -6,7 +6,7 @@
 #    By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 15:53:23 by hmateque          #+#    #+#              #
-#    Updated: 2025/05/12 10:41:04 by hmateque         ###   ########.fr        #
+#    Updated: 2025/05/16 11:51:05 by hmateque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,9 @@ SRCS =	src/main.c\
 		src/parser/validator_map.c\
 		src/parser/validator_texture.c\
 		src/map_render/init_window.c\
-		src/map_render/player_moves.c\
-		src/map_render/events_handler.c\
-		src/map_render/draw.c\
-		src/map_render/draw_2.c\
+		src/map_render/mini_map.c\
+		src/map_render/render.c\
+
 
 
 OBJ_SRC = $(SRCS:.c=.o)
