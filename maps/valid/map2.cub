@@ -1,0 +1,16 @@
+C 130,202,255
+F 0,127,0
+
+NO textures/1wall.xpm
+SO textures/2wall.xpm
+WE textures/4wall.xpm
+EA textures/3wall.xpm
+
+111111111
+101000011
+101000011
+101000011
+10000N011
+100001011
+100000011
+111111111

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_position.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:29:51 by hmateque          #+#    #+#             */
-/*   Updated: 2025/04/29 10:50:52 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:32:45 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	capture_position(char **map, t_config *config)
 				config->player_x = j;
 				config->player_y = i;
 				config->player_dir = map[i][j];
+				map[i][j] = '0';
 				return ;
 			}
 			j++;

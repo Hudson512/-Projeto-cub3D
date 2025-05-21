@@ -3,14 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   validator_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:01:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 10:18:43 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:31:41 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+int	count_lines(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i])
+		i++;
+	return (i);
+}
+
+int	max_width(char **map)
+{
+	int	i;
+	int	max;
+	int	len;
+
+	i = 0;
+	max = 0;
+	while (map[i])
+	{
+		len = ft_strlen(map[i]);
+		if (len > max)
+			max = len;
+		i++;
+	}
+	return (max);
+}
+
+void	init_normalize_map(int *height, int *width, char **map)
+{
+	*width = max_width(map);
+	*height = count_lines(map);
+}
+
+char	**normalize_map(char **map, int *out_height, int *out_width)
+{
+	char	c;
+	int		pos[2];
+	char	**normalized;
+
+	init_normalize_map(out_height, out_width, map);
+	normalized = malloc(sizeof(char *) * (*out_height + 1));
+	pos[1] = -1;
+	while (++pos[1] < *out_height)
+	{
+		normalized[pos[1]] = malloc(*out_width + 1);
+		pos[0] = -1;
+		while (map[pos[1]][++pos[0]])
+		{
+			c = map[pos[1]][pos[0]];
+			normalized[pos[1]][pos[0]] = c;
+			if (c == SPACE)
+				normalized[pos[1]][pos[0]] = GAP;
+		}
+		while (pos[0] < *out_width)
+			normalized[pos[1]][pos[0]++] = GAP;
+		normalized[pos[1]][pos[0]] = '\0';
+	}
+	normalized[*out_height] = NULL;
+	int i = -1, j;
+	while (normalized[++i])
+	{
+		j = -1;
+		while (normalized[i][++j])
+			if (normalized[i][j] != '0')
+				normalized[i][j] = '1';
+	}
+	return (normalized);
+}
 
 // Verifica se o caractere é um dos válidos para o mapa
 static int	is_valid_map_char(char c)
