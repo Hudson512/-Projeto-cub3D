@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/16 12:22:51 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:53:43 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,8 +200,10 @@ void	init_window(t_game *game)
 	init_player_direction(game);
 	
 	// Definir dimensões da janela
-	game->win_width = game->config.map_width * TILE_SIZE;
-	game->win_height = game->config.map_height * TILE_SIZE;
+	// game->win_width = game->config.map_width * TILE_SIZE;
+	// game->win_height = game->config.map_height * TILE_SIZE;
+    game->win_width = window_w;     // Usar a largura efetiva da janela
+    game->win_height = window_h;
 
 	// Criar imagem para o renderizador
 	game->screen_image.img_ptr = mlx_new_image(game->mlx, game->win_width, game->win_height);

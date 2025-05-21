@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/16 12:24:18 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/19 09:36:30 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #define MINIMAP_OFFSET_X 10      // Deslocamento X para o canto superior esquerdo do minimapa
 #define MINIMAP_OFFSET_Y 10      // Deslocamento Y para o canto superior esquerdo do minimapa
 #define MINIMAP_PLAYER_SIZE 3    // Tamanho do quadrado/ponto do jogador no minimapa
-#define MINIMAP_WALL_COLOR 0x00606060   // Cinza escuro para paredes do minimapa
-#define MINIMAP_FLOOR_COLOR 0x00C0C0C0  // Cinza claro para chão do minimapa
+#define MINIMAP_WALL_COLOR 0x00fefefe   // Cinza escuro para paredes do minimapa
+#define MINIMAP_FLOOR_COLOR 0x00000000  // Cinza claro para chão do minimapa
 #define MINIMAP_PLAYER_COLOR 0x00FF0000 // Vermelho para o jogador
 #define MINIMAP_RAY_COLOR 0x0000FF00    // Verde para os raios
 #define MINIMAP_FOV_COLOR 0x000000FF   // Azul para as linhas do campo de visão (opcional)

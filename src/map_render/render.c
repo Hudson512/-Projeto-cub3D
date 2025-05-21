@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:43:34 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/16 11:49:52 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/19 09:54:15 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@
 
 void render_next_frame(t_game *game)
 {
+    
     int x; // Coluna atual da tela que estamos renderizando
     
     if (!game || !game->mlx || !game->mlx_w || !game->screen_image.img_ptr || !game->screen_image.addr)
@@ -200,6 +201,7 @@ void render_next_frame(t_game *game)
                 my_mlx_pixel_put_to_image(game, x_fill, y_fill, 0x00228B22); // Verde grama (exemplo)
         }
     }
+    
 
     // --- INÍCIO DO DESENHO DO MINIMAPA ---
     draw_minimap_background(game);
@@ -225,7 +227,7 @@ void render_next_frame(t_game *game)
                          MINIMAP_FOV_COLOR);
     // --- FIM DO DESENHO DO MINIMAPA (RAIOS SERÃO DESENHADOS ABAIXO) ---
 
-
+    
     // Loop de Ray Casting para a visão 3D
     for (x = 0; x < game->win_width; x++)
     {
