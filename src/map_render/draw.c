@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:03:26 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/12 15:34:20 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:48:37 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,34 @@ void	draw_square(t_game *game, int x, int y, int color)
 	}
 }
 
-void	draw_map(t_game *game, int *map)
+static int	is_valid_player(char c)
+{
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
+void	draw_map(t_game *game)
 {
 	int	y;
 	int	x;
 	int	tile;
 	int	color;
 
-	game->map_x = 8;
-	game->map_y = 8;
-	game->map_s = 64;
 	y = -1;
 	while (++y < game->map_y)
 	{
 		x = -1;
 		while (++x < game->map_x)
 		{
-			tile = map[y * game->map_x + x];
+			tile = game->config.new_map[y][x];
 			color = 0x202020;
-			if (tile)
+			if (tile - 48)
 				color = 0xFFFFFF;
+			if (is_valid_player(game->config.new_map[y][x]))
+				color = 0x202020;
 			if (DEBUG)
 				draw_square(game, x * game->map_s, y * game->map_s, color);
 		}
 	}
-	(void)color;
 }
 
 void	draw_3d(t_game *game, t_render render)

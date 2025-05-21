@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/12 15:41:18 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:21:10 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ float	distance(t_render render, t_game *game)
 			+ (render.ry - game->py) * (render.ry - game->py)));
 }
 
-void	draw_3d_view(t_game *game, int *map)
+void	draw_3d_view(t_game *game)
 {
 	t_render	render;
 
 	render.r = -1;
 	render.ra = game->pa - DR * 30;
-	render.yo = 64;
+	render.yo = game->map_s;
 	if (render.ra < 0)
 		render.ra += 2 * PI;
 	if (render.ra > 2 * PI)
@@ -36,22 +36,22 @@ void	draw_3d_view(t_game *game, int *map)
 		render.aTan = -1 / tan(render.ra);
 		render.rx = game->px;
 		render.ry = game->py;
-		render.xo = 64;
+		render.xo = game->map_s;
 		render.disH = 1000000;
 		render.hx = game->px;
 		render.hy = game->py;
 		if (render.ra > PI)
 		{
-			render.ry = (((int)game->py >> 6) << 6) - 0.0001;
+			render.ry = (((int)game->py / game->map_s) * game->map_s) - 0.0001;
 			render.rx = (game->py - render.ry) * render.aTan + game->px;
-			render.yo = -64;
+			render.yo = -game->map_s;
 			render.xo = -render.yo * render.aTan;
 		}
 		if (render.ra < PI)
 		{
-			render.ry = (((int)game->py >> 6) << 6) + 64;
+			render.ry = (((int)game->py / game->map_s) * game->map_s) + game->map_s;
 			render.rx = (game->py - render.ry) * render.aTan + game->px;
-			render.yo = 64;
+			render.yo = game->map_s;
 			render.xo = -render.yo * render.aTan;
 		}
 		if (render.ra == 0 || render.ra == PI)
@@ -62,11 +62,11 @@ void	draw_3d_view(t_game *game, int *map)
 		}
 		while (render.dof < 8)
 		{
-			render.mx = (int)(render.rx) >> 6;
-			render.my = (int)(render.ry) >> 6;
+			render.mx = (int)(render.rx) / game->map_s;
+			render.my = (int)(render.ry) / game->map_s;
 			render.mp = render.my * game->map_x + render.mx;
 			if (render.mp > 0 && render.mp < game->map_x * game->map_y
-				&& map[render.mp] > 0)
+				&& game->config.map[render.my][render.mx] != '0')
 			{
 				render.dof = 8;
 				render.hx = render.rx;
@@ -88,16 +88,16 @@ void	draw_3d_view(t_game *game, int *map)
 		render.vy = game->py;
 		if (render.ra > PI2 && render.ra < PI3)
 		{
-			render.rx = (((int)game->px >> 6) << 6) - 0.0001;
+			render.rx = (((int)game->px / game->map_s) * game->map_s) - 0.0001;
 			render.ry = (game->px - render.rx) * render.nTan + game->py;
-			render.xo = -64;
+			render.xo = -game->map_s;
 			render.yo = -render.xo * render.nTan;
 		}
 		if (render.ra < PI2 || render.ra > PI3)
 		{
-			render.rx = (((int)game->px >> 6) << 6) + 64;
+			render.rx = (((int)game->px / game->map_s) * game->map_s) + game->map_s;
 			render.ry = (game->px - render.rx) * render.nTan + game->py;
-			render.xo = 64;
+			render.xo = game->map_s;
 			render.yo = -render.xo * render.nTan;
 		}
 		if (render.ra == 0 || render.ra == PI)
@@ -108,11 +108,11 @@ void	draw_3d_view(t_game *game, int *map)
 		}
 		while (render.dof < 8)
 		{
-			render.mx = (int)(render.rx) >> 6;
-			render.my = (int)(render.ry) >> 6;
+			render.mx = (int)(render.rx) / game->map_s;
+			render.my = (int)(render.ry) / game->map_s;
 			render.mp = render.my * game->map_x + render.mx;
 			if (render.mp > 0 && render.mp < game->map_x * game->map_y
-				&& map[render.mp] > 0)
+				&& game->config.map[render.my][render.mx] != '0')
 			{
 				render.dof = 8;
 				render.vx = render.rx;
@@ -160,29 +160,18 @@ void	draw_3d_view(t_game *game, int *map)
 
 void	draw(t_game *game)
 {
-	int	map[] = {
-		1, 1, 1, 1, 1, 1, 1, 1,
-		1, 0, 1, 0, 0, 0, 0, 1,
-		1, 0, 1, 0, 0, 0, 0, 1,
-		1, 0, 1, 0, 0, 0, 0, 1,
-		1, 0, 0, 0, 0, 0, 0, 1,
-		1, 0, 0, 0, 0, 1, 0, 1,
-		1, 0, 0, 0, 0, 0, 0, 1,
-		1, 1, 1, 1, 1, 1, 1, 1,
-	};
-
 	if (CLEAR)
 		mlx_clear_window(game->mlx, game->mlx_w);
-	draw_map(game, map);
+	draw_map(game);
 	draw_player(game);
 	draw_pfov(game);
-	draw_3d_view(game, map);
+	draw_3d_view(game);
 }
 
 void	init_window(t_game *game)
 {
-	game->px = 300;
-	game->py = 300;
+	int	dim[2];
+
 	game->screen_width = 1024;
 	game->screen_height = 512;
 	if (AUTOWIDTH)
@@ -192,15 +181,20 @@ void	init_window(t_game *game)
 		game->screen_width /= 2;
 		game->screen_height /= 2;
 	}
-	printf("Screen size: %dWx%dH\n", game->screen_width, game->screen_height);
 	game->mlx_w = mlx_new_window(game->mlx,
 			game->screen_width, game->screen_height, "cub3d");
+	game->player_fov = 64;
+	game->config.new_map = normalize_map(game->config.map, &dim[0], &dim[1]);
+	game->map_x = ft_strlen(game->config.new_map[0]);
+	game->map_y = count_lines(game->config.new_map);
+	game->map_s = game->map_x * game->map_y;
+	while (game->map_s * game->map_x > game->screen_width / 2 || game->map_s * game->map_y > game->screen_height)
+		game->map_s--;
 	game->pa = 0;
-	game->px = 300;
-	game->py = 300;
+	game->px = (game->config.player_x * game->map_s) + (game->map_s / 3);
+	game->py = (game->config.player_y * game->map_s) + (game->map_s / 3);
 	game->pdx = cos(game->pa) * SPEED;
 	game->pdy = sin(game->pa) * SPEED;
-	game->player_fov = 64;
 	draw(game);
 	mlx_hook(game->mlx_w, 2, 1L << 0, key_press_handler, game);
 	mlx_loop(game->mlx);

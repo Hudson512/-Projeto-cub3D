@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:56:03 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/12 15:11:55 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:25:21 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 
 void	a_press_handler(t_game *game)
 {
-	if (game->pa < 0)
-		game->pa += 2 * PI;
-	game->pdx = cos(game->pa) * SPEED;
-	game->pdy = sin(game->pa) * SPEED;
-	if (game->px > 0)
+	float	side_dx;
+	float	side_dy;
+
+	side_dx = cos(game->pa - PI / 2) * SPEED;
+	side_dy = sin(game->pa - PI / 2) * SPEED;
+	if (game->px > 0 && game->py > 0)
 	{
-		game->px -= SPEED;
-		game->px -= SPEED;
+		game->px += side_dx;
+		game->py += side_dy;
 	}
 }
 
 void	d_press_handler(t_game *game)
 {
-	if (game->pa > 2 * PI)
-		game->pa -= 2 * PI;
-	game->pdx = cos(game->pa) * SPEED;
-	game->pdy = sin(game->pa) * SPEED;
-	if (game->px < game->screen_width)
+	float	side_dx;
+	float	side_dy;
+
+	side_dx = cos(game->pa + PI / 2) * SPEED;
+	side_dy = sin(game->pa + PI / 2) * SPEED;
+	if (game->px < game->screen_width && game->py < game->screen_height)
 	{
-		game->px += SPEED;
-		game->px += SPEED;
+		game->px += side_dx;
+		game->py += side_dy;
 	}
 }
 
@@ -42,8 +44,8 @@ void	w_press_handler(t_game *game)
 {
 	if (game->py > 0)
 	{
-		game->px -= -game->pdx * SPEED;
-		game->py -= -game->pdy * SPEED;
+		game->px -= -game->pdx;
+		game->py -= -game->pdy;
 	}
 }
 
@@ -51,7 +53,7 @@ void	s_press_handler(t_game *game)
 {
 	if (game->py < game->screen_height)
 	{
-		game->px += -game->pdx * SPEED;
-		game->py += -game->pdy * SPEED;
+		game->px += -game->pdx;
+		game->py += -game->pdy;
 	}
 }

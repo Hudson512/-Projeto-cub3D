@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 15:36:02 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:08:07 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_config
 	t_color	floor_color;
 	t_color	ceiling_color;
 	char	**map;
+	char	**new_map;
 	int		player_x;
 	int		player_y;
 	char	player_dir;
@@ -139,7 +140,10 @@ int			check_texture_path(char *path);
 int			is_color_valid(t_color color);
 int			have_valid_wall(char **map);
 
+char		**normalize_map(char **map, int *out_height, int *out_width);
+
 int			free_matrix(char **mat);
+int			count_lines(char **map);
 int			has_invalid_map_char(char **map);
 
 // Window initialization
@@ -158,7 +162,7 @@ void		left_press_handler(t_game *game);
 void		draw(t_game *game);
 void		draw_line(t_game *game, int x0, int y0, int x1, int y1, int color);
 void		draw_square(t_game *game, int x, int y, int color);
-void		draw_map(t_game *game, int *map);
+void		draw_map(t_game *game);
 void		draw_3d(t_game *game, t_render render);
 void		draw_pfov(t_game *game);
 void		draw_player(t_game *game);
