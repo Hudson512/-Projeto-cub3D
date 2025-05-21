@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:46 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/16 09:11:59 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:24:24 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ int	main(int argc, char **argv)
 	ft_memset(&game, 0, sizeof(t_game));
 	if (parse_file(argv[1], &config))
 		return (1);
-		
-	//printf("Configurações lidas:\n");
-	//print_config(&config);
 	game.mlx = mlx_init();
 	if (!game.mlx)
 		error_exit("Error\nFalha ao inicializar MLX\n");

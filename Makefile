@@ -6,7 +6,7 @@
 #    By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 15:53:23 by hmateque          #+#    #+#              #
-#    Updated: 2025/05/16 11:51:05 by hmateque         ###   ########.fr        #
+#    Updated: 2025/05/21 12:54:01 by hmateque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ SRCS =	src/main.c\
 		src/map_render/init_window.c\
 		src/map_render/mini_map.c\
 		src/map_render/render.c\
+		src/map_render/evennts_player.c\
+		src/map_render/move_player.c\
 
 
 

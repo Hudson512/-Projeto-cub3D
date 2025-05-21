@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/19 09:36:30 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:49:21 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,14 @@ int				has_invalid_map_char(char **map);
 void			init_window(t_game *game);
 void 			render_next_frame(t_game *game);
 void 			my_mlx_pixel_put_to_image(t_game *game, int x, int y, int color);
+
+// Eventos de teclado
+int handle_keypress(int keycode, t_game *game);
+int close_window_x(t_game *game);
+
+// movimento do jogador
+void player_rotate(t_game *game, double angle);
+void player_move(t_game *game, double move_x_component, double move_y_component);
 
 // minimap
 void draw_minimap_square(t_game *game, int top_left_x, int top_left_y, int size, int color);
