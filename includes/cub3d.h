@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/21 12:49:21 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:27:24 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,25 @@ typedef struct s_game
 	t_img   screen_image;
 }				t_game;
 
+// Adicione isto em includes/cub3d.h
+
+typedef struct s_ray
+{
+    double	camera_x;
+    double	dir_x;  // Changed from ray_dir_x
+    double	dir_y;  // Changed from ray_dir_y
+    int		map_x;
+    int		map_y;
+    double	side_dist_x;
+    double	side_dist_y;
+    double	delta_dist_x;
+    double	delta_dist_y;
+    int		step_x;
+    int		step_y;
+    int		hit;
+    int		side;
+    double	perp_wall_dist;
+}			t_ray;
 
 
 // Parse file

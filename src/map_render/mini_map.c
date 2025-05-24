@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 10:53:37 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/21 13:02:48 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/24 12:56:00 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void draw_line_on_minimap(t_game *game, int x0, int y0, int x1, int y1, int colo
 
     if (!game)
         return;
-
+    (void)color; // Se não for necessário usar a cor, pode ser removido
     // Adiciona o offset global do minimapa aos pontos da linha
     x0 += MINIMAP_OFFSET_X;
     y0 += MINIMAP_OFFSET_Y;
