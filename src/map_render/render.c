@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:43:34 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/24 14:35:52 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/26 09:36:26 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,6 @@
 static int rgb_to_int(t_color color)
 {
     return ((color.r << 16) | (color.g << 8) | color.b);
-}
-
-static void	draw_fov_ray(t_game *game, int center_x, int center_y,
-	double ray_x, double ray_y)
-{
-	draw_line_on_minimap(game, center_x, center_y,
-		center_x + (int)(ray_x * MINIMAP_SCALE * 5),
-		center_y + (int)(ray_y * MINIMAP_SCALE * 5),
-		MINIMAP_FOV_COLOR);
-}
-
-static void	render_minimap(t_game *game)
-{
-	int		player_minimap_x;
-	int		player_minimap_y;
-	double	fov_left_x;
-	double	fov_left_y;
-
-	if (!game || !game->mlx || !game->mlx_w
-		|| !game->screen_image.img_ptr || !game->screen_image.addr)
-		return ;
-	draw_minimap_background(game);
-	draw_player_on_minimap(game);
-	player_minimap_x = (int)(game->config.player_x * MINIMAP_SCALE);
-	player_minimap_y = (int)(game->config.player_y * MINIMAP_SCALE);
-	fov_left_x = game->dir_x - game->plane_x;
-	fov_left_y = game->dir_y - game->plane_y;
-	draw_fov_ray(game, player_minimap_x, player_minimap_y,
-		fov_left_x, fov_left_y);
-	draw_fov_ray(game, player_minimap_x, player_minimap_y,
-		game->dir_x + game->plane_x, game->dir_y + game->plane_y);
 }
 
 void update_ray_x(t_ray *ray)
@@ -198,11 +167,7 @@ void	render_next_frame(t_game *game)
 	t_ray	ray;
 	int		x;
 
-	if (!game || !game->mlx || !game->mlx_w || !game->screen_image.img_ptr
-		|| !game->screen_image.addr)
-		return ;
-	if (!game->config.map || game->config.map_width <= 0
-		|| game->config.map_height <= 0)
+	if (!verify_struct(game))
 		return ;
 	fill_background(game);
 	render_minimap(game);
@@ -222,4 +187,21 @@ void	render_next_frame(t_game *game)
 	}
 	mlx_put_image_to_window(game->mlx, game->mlx_w,
 		game->screen_image.img_ptr, 0, 0);
+}
+
+int	verify_struct(t_game *game)
+{
+	if (!game || !game->mlx || !game->mlx_w
+		|| !game->screen_image.img_ptr || !game->screen_image.addr)
+	{
+		ft_putstr_fd("Error: Game structure is not properly initialized.\n", 2);
+		return (0);
+	}
+	if (!game->config.map || game->config.map_width <= 0
+		|| game->config.map_height <= 0)
+	{
+		ft_putstr_fd("Error: Invalid map configuration.\n", 2);
+		return (0);
+	}
+	return (1);
 }

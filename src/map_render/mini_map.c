@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 10:53:37 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/24 12:56:00 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/26 10:18:52 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,35 @@ void draw_line_on_minimap(t_game *game, int x0, int y0, int x1, int y1, int colo
             y0 += sy;
         }
     }
+}
+
+static void	draw_fov_ray(t_game *game, int center_x, int center_y,
+	double ray_x, double ray_y)
+{
+	draw_line_on_minimap(game, center_x, center_y,
+		center_x + (int)(ray_x * MINIMAP_SCALE * 5),
+		center_y + (int)(ray_y * MINIMAP_SCALE * 5),
+		MINIMAP_FOV_COLOR);
+}
+
+void	render_minimap(t_game *game)
+{
+	int		player_minimap_x;
+	int		player_minimap_y;
+	double	fov_left_x;
+	double	fov_left_y;
+
+	if (!game || !game->mlx || !game->mlx_w
+		|| !game->screen_image.img_ptr || !game->screen_image.addr)
+		return ;
+	draw_minimap_background(game);
+	draw_player_on_minimap(game);
+	player_minimap_x = (int)(game->config.player_x * MINIMAP_SCALE);
+	player_minimap_y = (int)(game->config.player_y * MINIMAP_SCALE);
+	fov_left_x = game->dir_x - game->plane_x;
+	fov_left_y = game->dir_y - game->plane_y;
+	draw_fov_ray(game, player_minimap_x, player_minimap_y,
+		fov_left_x, fov_left_y);
+	draw_fov_ray(game, player_minimap_x, player_minimap_y,
+		game->dir_x + game->plane_x, game->dir_y + game->plane_y);
 }

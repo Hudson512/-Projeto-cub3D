@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/24 14:27:24 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/26 09:34:02 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,11 +160,13 @@ void player_rotate(t_game *game, double angle);
 void player_move(t_game *game, double move_x_component, double move_y_component);
 
 // minimap
+void	render_minimap(t_game *game);
 void draw_minimap_square(t_game *game, int top_left_x, int top_left_y, int size, int color);
 void draw_minimap_background(t_game *game);
 void draw_player_on_minimap(t_game *game);
 void draw_line_on_minimap(t_game *game, int x0, int y0, int x1, int y1, int color);
 
+int	verify_struct(t_game *game);
 
 
 

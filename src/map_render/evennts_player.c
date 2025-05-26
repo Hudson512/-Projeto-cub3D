@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 12:38:53 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/21 12:53:01 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:46:09 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int close_window_x(t_game *game)
     
     if (game && game->mlx && game->mlx_w)
     {
+        mlx_destroy_image(game->mlx, game->screen_image.img_ptr);
         mlx_destroy_window(game->mlx, game->mlx_w);
+        mlx_destroy_display(game->mlx);
     }
     sucess_exit("Janela fechada!\n");
     exit(0);

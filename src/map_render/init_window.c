@@ -6,13 +6,11 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/21 12:42:33 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:49:15 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-
 
 static void init_player_direction(t_game *game)
 {
