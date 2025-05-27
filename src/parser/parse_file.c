@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/13 11:36:50 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:42:19 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	parse_file(const char *filename, t_config *config)
 	if (!check_extension(filename, ".cub"))
 		return (ft_putstr_fd("Error\nArquivo deve ter a extensao .cub\n", 2), 1);
 	if (!validate_map_at_end(filename))
-		return (ft_putstr_fd("Error\nMapa não é a última parte do arquivo .cub\n", 2), 1);
+		return (1);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (ft_putstr_fd("Error\nNao foi possivel abrir o arquivo\n", 2),
@@ -101,7 +101,7 @@ int	validate_map_at_end(const char *file_path)
 	in_map = 0;
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
-		return (0);
+		return (ft_putstr_fd("Error\nNao foi possivel abrir o arquivo\n", 2), 0);
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
@@ -111,6 +111,7 @@ int	validate_map_at_end(const char *file_path)
 		{
 			free(line);
 			close(fd);
+			ft_putstr_fd("Error\nMapa não é a última parte do arquivo .cub\n", 2);
 			return (0);
 		}
 		free(line);

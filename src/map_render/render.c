@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:43:34 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/26 13:37:25 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:46:31 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,6 @@ void	render_next_frame(t_game *game)
 	if (!verify_struct(game))
 		return ;
 	fill_background(game);
-	render_minimap(game);
 	x = 0;
 	while (x < game->win_width)
 	{
@@ -185,6 +184,7 @@ void	render_next_frame(t_game *game)
 		}
 		x++;
 	}
+	render_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->mlx_w,
 		game->screen_image.img_ptr, 0, 0);
 }
