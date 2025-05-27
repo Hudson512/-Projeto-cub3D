@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:43:34 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/27 10:46:31 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:32:32 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void	render_next_frame(t_game *game)
 	if (!verify_struct(game))
 		return ;
 	fill_background(game);
-	x = 0;
+ 	x = 0;
 	while (x < game->win_width)
 	{
 		init_ray_values(game, x, &ray);

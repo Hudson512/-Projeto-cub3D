@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 12:38:53 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/26 13:58:44 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:34:52 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int handle_keypress(int keycode, t_game *game)
     }
     else
         return (0);
-    printf("Player X: %.2f, Y: %.2f, DirX: %.2f, DirY: %.2f\n", game->config.player_x, game->config.player_y, game->dir_x, game->dir_y);
     render_next_frame(game);
     return (0);
 }
