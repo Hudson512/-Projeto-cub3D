@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 12:40:05 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/21 12:53:22 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:05:57 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,15 @@ void player_move(t_game *game, double move_x_component, double move_y_component)
         game->config.player_x = new_player_x;
         game->config.player_y = new_player_y;
     }
+}
+
+void player_zoom(t_game *game, double angle)
+{
+    if (!game)
+        return;
+    game->move_speed += angle * 0.01; // Ajuste a sensibilidade do zoom
+    if (game->move_speed < 0.01) // Limite mínimo de velocidade
+        game->move_speed = 0.01;
+    else if (game->move_speed > 0.5) // Limite máximo de velocidade
+        game->move_speed = 0.5;
 }

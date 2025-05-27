@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/26 12:49:15 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:32:38 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void init_player_direction(t_game *game)
         return;
     game->move_speed = 0.05;
     game->rot_speed = 0.03;
+    game->fov_scale_factor = 1.0;
     if (game->config.player_dir == 'N')
     {
         game->dir_x = 0;

@@ -6,7 +6,7 @@
 #    By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 15:53:23 by hmateque          #+#    #+#              #
-#    Updated: 2025/05/21 12:54:01 by hmateque         ###   ########.fr        #
+#    Updated: 2025/05/26 13:07:56 by hmateque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,9 @@ re: fclean all
 
 test:
 	./test_maps.sh
+
+start:
+	./$(NAME) maps/valid/subject.cub
 
 valgrind:
 	valgrind --leak-check=full ./$(NAME) maps/valid/subject.cub

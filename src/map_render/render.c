@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:43:34 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/26 09:36:26 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:37:25 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ static void	draw_wall_line(t_game *game, t_ray *ray, int x)
 	int	color;
 	int	y;
 
-	line_height = (int)(game->win_height / ray->perp_wall_dist);
+	line_height = (int)((game->win_height / ray->perp_wall_dist) * game->fov_scale_factor);
 	draw_start = -line_height / 2 + game->win_height / 2;
 	if (draw_start < 0)
 		draw_start = 0;

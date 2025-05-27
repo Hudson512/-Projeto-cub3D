@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator_aux.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:16 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/05 12:13:04 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:21:28 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@ int	check_extension(const char *filename, char *str_ext)
 	size_t	str_len;
 	size_t	suffix_len;
 
+	if (!filename || !str_ext)
+		return (0);
 	str_len = ft_strlen(filename);
 	suffix_len = ft_strlen(str_ext);
-	if (suffix_len > str_len)
+	if (suffix_len >= str_len)
 		return (0);
-	return (ft_strncmp(filename + str_len - suffix_len,
-			str_ext, suffix_len) == 0);
+	if (ft_strncmp(filename + str_len - suffix_len, str_ext, suffix_len) != 0)
+		return (0);
+	if (filename[str_len - suffix_len - 1] == '/' || filename[0] == '.')
+		return (0);
+	return (1);
 }
 
 int	is_empty_line(char *line)

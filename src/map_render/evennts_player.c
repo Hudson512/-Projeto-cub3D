@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 12:38:53 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/26 12:46:09 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:58:44 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,46 @@ int handle_keypress(int keycode, t_game *game)
         player_rotate(game, -game->rot_speed);
     else if (keycode == KEY_RIGHT_ARROW)
         player_rotate(game, game->rot_speed);
+    else if (keycode == KEY_PLUS)
+    {
+        double next_plane_x = game->plane_x * (1.0 - ZOOM_FACTOR);
+        double next_plane_y = game->plane_y * (1.0 - ZOOM_FACTOR);
+        int can_zoom = 1;
+
+        if (fabs(game->plane_x) > 1e-6 && fabs(next_plane_x) < MIN_PLANE_ACTIVE_COMPONENT)
+            can_zoom = 0; // O componente X ativo ficaria demasiado pequeno
+        if (fabs(game->plane_y) > 1e-6 && fabs(next_plane_y) < MIN_PLANE_ACTIVE_COMPONENT)
+            can_zoom = 0; // O componente Y ativo ficaria demasiado pequeno
+        
+        if (fabs(game->plane_x) < MIN_PLANE_ACTIVE_COMPONENT && fabs(game->plane_y) < MIN_PLANE_ACTIVE_COMPONENT)
+                can_zoom = 0;
+
+
+        if (can_zoom)
+        {
+            game->plane_x = next_plane_x;
+            game->plane_y = next_plane_y;
+            game->fov_scale_factor /= (1.0 - ZOOM_FACTOR);
+        }
+    }
+    else if (keycode == KEY_MINUS)
+    {
+        double next_plane_x = game->plane_x * (1.0 + ZOOM_FACTOR);
+        double next_plane_y = game->plane_y * (1.0 + ZOOM_FACTOR);
+        int can_zoom = 1;
+
+        if (fabs(game->plane_x) > 1e-6 && fabs(next_plane_x) > MAX_PLANE_ACTIVE_COMPONENT)
+            can_zoom = 0;
+        if (fabs(game->plane_y) > 1e-6 && fabs(next_plane_y) > MAX_PLANE_ACTIVE_COMPONENT)
+            can_zoom = 0;
+
+        if (can_zoom)
+        {
+            game->plane_x = next_plane_x;
+            game->plane_y = next_plane_y;
+            game->fov_scale_factor /= (1.0 + ZOOM_FACTOR);
+        }
+    }
     else
         return (0);
     printf("Player X: %.2f, Y: %.2f, DirX: %.2f, DirY: %.2f\n", game->config.player_x, game->config.player_y, game->dir_x, game->dir_y);

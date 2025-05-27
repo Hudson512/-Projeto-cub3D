@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/26 09:34:02 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:55:16 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@
 #define KEY_D 100
 #define KEY_LEFT_ARROW 65361
 #define KEY_RIGHT_ARROW 65363
+#define KEY_PLUS 65362
+#define KEY_MINUS 65364
+
+#define ZOOM_FACTOR 0.1
+#define MIN_PLANE_ACTIVE_COMPONENT 0.05
+#define MAX_PLANE_ACTIVE_COMPONENT 5.0
 
 # define TILE_SIZE 64
 
@@ -95,7 +101,7 @@ typedef struct s_game
 	int     win_width;
     int     win_height;
 
-
+    double fov_scale_factor;
 	t_config	config;
 	t_img   screen_image;
 }				t_game;
@@ -158,6 +164,8 @@ int close_window_x(t_game *game);
 // movimento do jogador
 void player_rotate(t_game *game, double angle);
 void player_move(t_game *game, double move_x_component, double move_y_component);
+void player_zoom(t_game *game, double angle);
+
 
 // minimap
 void	render_minimap(t_game *game);
