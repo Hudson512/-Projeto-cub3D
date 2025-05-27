@@ -3,45 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:43:34 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/27 11:32:32 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:46:21 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int rgb_to_int(t_color color)
+static int	rgb_to_int(t_color color)
 {
-    return ((color.r << 16) | (color.g << 8) | color.b);
+	return ((color.r << 16) | (color.g << 8) | color.b);
 }
 
-void update_ray_x(t_ray *ray)
+void	update_ray_x(t_ray *ray)
 {
-    ray->side_dist_x += ray->delta_dist_x;
-    ray->map_x += ray->step_x;
-    ray->side = 0;
+	ray->side_dist_x += ray->delta_dist_x;
+	ray->map_x += ray->step_x;
+	ray->side = 0;
 }
 
-void update_ray_y(t_ray *ray)
+void	update_ray_y(t_ray *ray)
 {
-    ray->side_dist_y += ray->delta_dist_y;
-    ray->map_y += ray->step_y;
-    ray->side = 1;
+	ray->side_dist_y += ray->delta_dist_y;
+	ray->map_y += ray->step_y;
+	ray->side = 1;
 }
 
-int is_wall_hit(t_game *game, t_ray *ray)
+int	is_wall_hit(t_game *game, t_ray *ray)
 {
-    if (ray->map_x >= 0 && ray->map_x < game->config.map_width
-        && ray->map_y >= 0 && ray->map_y < game->config.map_height)
-    {
-        if (game->config.map[ray->map_y]
-            && ray->map_x < (int)ft_strlen(game->config.map[ray->map_y])
-            && game->config.map[ray->map_y][ray->map_x] == '1')
-            return (1);
-    }
-    return (0);
+	if (ray->map_x >= 0 && ray->map_x < game->config.map_width
+		&& ray->map_y >= 0 && ray->map_y < game->config.map_height)
+	{
+		if (game->config.map[ray->map_y]
+			&& ray->map_x < (int)ft_strlen(game->config.map[ray->map_y])
+			&& game->config.map[ray->map_y][ray->map_x] == '1')
+			return (1);
+	}
+	return (0);
 }
 
 static void	fill_background(t_game *game)
@@ -74,8 +74,12 @@ static void	init_ray_values(t_game *game, int x, t_ray *ray)
 	ray->dir_y = game->dir_y + game->plane_y * ray->camera_x;
 	ray->map_x = (int)game->config.player_x;
 	ray->map_y = (int)game->config.player_y;
-	ray->delta_dist_x = (ray->dir_x == 0) ? 1e30 : fabs(1 / ray->dir_x);
-	ray->delta_dist_y = (ray->dir_y == 0) ? 1e30 : fabs(1 / ray->dir_y);
+	ray->delta_dist_x = fabs(1 / ray->dir_x);
+	if (ray->dir_x == 0)
+		ray->delta_dist_x = 1e30;
+	ray->delta_dist_y = fabs(1 / ray->dir_y);
+	if (ray->dir_y == 0)
+		ray->delta_dist_y = 1e30;
 	ray->hit = 0;
 	ray->side = 0;
 }
@@ -135,14 +139,17 @@ static void	draw_wall_line(t_game *game, t_ray *ray, int x)
 	int	color;
 	int	y;
 
-	line_height = (int)((game->win_height / ray->perp_wall_dist) * game->fov_scale_factor);
+	line_height = (int)((game->win_height / ray->perp_wall_dist)
+			* game->fov_scale_factor);
 	draw_start = -line_height / 2 + game->win_height / 2;
 	if (draw_start < 0)
 		draw_start = 0;
 	draw_end = line_height / 2 + game->win_height / 2;
 	if (draw_end >= game->win_height)
 		draw_end = game->win_height - 1;
-	color = (ray->side == 1) ? 0x00707070 : 0x00909090;
+	color = 0x00909090;
+	if (ray->side == 1)
+		color = 0x00707070;
 	y = draw_start;
 	while (y <= draw_end)
 	{
@@ -151,15 +158,15 @@ static void	draw_wall_line(t_game *game, t_ray *ray, int x)
 	}
 }
 
-void calculate_wall_distance(t_game *game, t_ray *ray)
+void	calculate_wall_distance(t_game *game, t_ray *ray)
 {
-    (void)game; // Suppress unused parameter warning
-    if (ray->side == 0)
-        ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
-    else
-        ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
-    if (ray->perp_wall_dist <= 0.0001)
-        ray->perp_wall_dist = 0.0001;
+	(void)game;
+	if (ray->side == 0)
+		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
+	else
+		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
+	if (ray->perp_wall_dist <= 0.0001)
+		ray->perp_wall_dist = 0.0001;
 }
 
 void	render_next_frame(t_game *game)
@@ -169,8 +176,8 @@ void	render_next_frame(t_game *game)
 
 	if (!verify_struct(game))
 		return ;
+	x = 0;
 	fill_background(game);
- 	x = 0;
 	while (x < game->win_width)
 	{
 		init_ray_values(game, x, &ray);

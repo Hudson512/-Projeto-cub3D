@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:46 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/21 12:24:24 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:47:04 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Error\nUso: ./cub3D mapa.cub\n", 2);
 		return (1);
 	}
-	
 	ft_memset(&config, 0, sizeof(t_config));
 	ft_memset(&game, 0, sizeof(t_game));
 	if (parse_file(argv[1], &config))

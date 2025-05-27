@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/13 11:49:28 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:06:49 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	map_rows(char **map)
 	return (i);
 }
 
-int map_cols(char **map)
+int	map_cols(char **map)
 {
 	int	i;
 	int	j;

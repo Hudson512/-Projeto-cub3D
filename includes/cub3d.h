@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/27 11:41:20 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:49:18 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,32 +85,24 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*mlx_w;
-
-	// Novos campos para direção e plano da câmera
 	double		dir_x;
 	double		dir_y;
 	double		plane_x;
 	double		plane_y;
-
-	// Velocidades
 	double		move_speed;
 	double		rot_speed;
-
 	int			win_width;
 	int			win_height;
-
 	double		fov_scale_factor;
 	t_config	config;
 	t_img		screen_image;
 }				t_game;
 
-// Adicione isto em includes/cub3d.h
-
 typedef struct s_ray
 {
 	double		camera_x;
-	double dir_x; // Changed from ray_dir_x
-	double dir_y; // Changed from ray_dir_y
+	double		dir_x;
+	double		dir_y;
 	int			map_x;
 	int			map_y;
 	double		side_dist_x;
@@ -123,6 +115,15 @@ typedef struct s_ray
 	int			side;
 	double		perp_wall_dist;
 }				t_ray;
+
+typedef struct s_draw {
+	int			dx;
+	int			dy;
+	int			sx;
+	int			sy;
+	int			err;
+	int			e2;
+}				t_draw;
 
 // Parse file
 int				check_extension(const char *filename, char *str_ext);
@@ -173,7 +174,6 @@ void			draw_minimap_background(t_game *game);
 void			draw_player_on_minimap(t_game *game);
 void			draw_line_on_minimap(t_game *game, int x0, int y0, int x1,
 					int y1, int color);
-
 int				verify_struct(t_game *game);
 
 #endif
