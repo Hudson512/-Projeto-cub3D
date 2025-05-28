@@ -3,51 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/28 11:52:15 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/28 12:40:51 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-static void	init_player_direction(t_game *game)
-{
-	if (!game)
-		return ;
-	game->move_speed = 0.05;
-	game->rot_speed = 0.03;
-	game->fov_scale_factor = 1.0;
-	if (game->config.player_dir == 'N')
-	{
-		game->dir_x = 0;
-		game->dir_y = -1;
-		game->plane_x = 0.66;
-		game->plane_y = 0;
-	}
-	else if (game->config.player_dir == 'S')
-	{
-		game->dir_x = 0;
-		game->dir_y = 1;
-		game->plane_x = -0.66;
-		game->plane_y = 0;
-	}
-	else if (game->config.player_dir == 'W')
-	{
-		game->dir_x = -1;
-		game->dir_y = 0;
-		game->plane_x = 0;
-		game->plane_y = -0.66;
-	}
-	else if (game->config.player_dir == 'E')
-	{
-		game->dir_x = 1;
-		game->dir_y = 0;
-		game->plane_x = 0;
-		game->plane_y = 0.66;
-	}
-}
 
 static void	init_new_window(t_game *game)
 {

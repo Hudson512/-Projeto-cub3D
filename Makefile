@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+         #
+#    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 15:53:23 by hmateque          #+#    #+#              #
-#    Updated: 2025/05/28 11:43:41 by hmateque         ###   ########.fr        #
+#    Updated: 2025/05/28 12:43:52 by lantonio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,10 @@ SRCS =	src/main.c\
 		src/parser/validator_map_aux.c\
 		src/parser/validator_texture.c\
 		src/map_render/init_window.c\
+		src/map_render/player_placement.c\
 		src/map_render/manipulate_pixels.c\
 		src/map_render/mini_map.c\
+		src/map_render/mini_map_aux.c\
 		src/map_render/render.c\
 		src/map_render/render_core.c\
 		src/map_render/render_core_aux.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 11:44:43 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/28 12:45:16 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,26 +156,25 @@ int				map_cols(char **map);
 void			parse_exit(char *msg);
 void			sucess_exit(char *msg);
 void			error_exit(char *msg);
-int			close_window_x(t_game *game);
+int				close_window_x(t_game *game);
 
 // Window initialization
 void			init_window(t_game *game);
 
 // Rendering 3D
-void	render_next_frame(t_game *game);				
-void	calculate_wall_distance(t_game *game, t_ray *ray);
-void	draw_wall_line(t_game *game, t_ray *ray, int x);
-void	perform_dda(t_game *game, t_ray *ray);
-void	calculate_step_and_side_dist(t_game *game, t_ray *ray);
+void			render_next_frame(t_game *game);				
+void			calculate_wall_distance(t_game *game, t_ray *ray);
+void			draw_wall_line(t_game *game, t_ray *ray, int x);
+void			perform_dda(t_game *game, t_ray *ray);
+void			calculate_step_and_side_dist(t_game *game, t_ray *ray);
 
 // minimap
 void			render_minimap(t_game *game);
-void			draw_minimap_square(t_game *game, int top_left_x,
-					int top_left_y, int size, int color);
+void			draw_minimap_square(t_game *game, int *top_left,
+					int size, int color);
 void			draw_minimap_background(t_game *game);
 void			draw_player_on_minimap(t_game *game);
-void			draw_line_on_minimap(t_game *game, int x0, int y0, int x1,
-					int y1, int color);
+void			draw_line_on_minimap(t_game *game, int *x, int *y);
 
 // Pixel manipulation
 void			my_mlx_pixel_put_to_image(t_game *game, int x, int y,
@@ -184,11 +183,12 @@ void			my_mlx_pixel_put_to_image(t_game *game, int x, int y,
 // Eventos
 int				handle_keypress(int keycode, t_game *game);
 
-// movimento do jogador
+// Player moves and placement
 void			player_rotate(t_game *game, double angle);
 void			player_move(t_game *game, double move_x_component,
 					double move_y_component);
 void			handle_zoom_out(t_game *game);
 void			handle_zoom_in(t_game *game);
+void			init_player_direction(t_game *game);
 
 #endif
