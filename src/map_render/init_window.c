@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:59:27 by lantonio          #+#    #+#             */
-/*   Updated: 2025/05/27 14:24:48 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:46:37 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,6 @@ static void	init_player_direction(t_game *game)
 	}
 }
 
-void	my_mlx_pixel_put_to_image(t_game *game, int x, int y, int color)
-{
-	char	*dst;
-
-	if (!game || !game->screen_image.addr)
-		return ;
-	if (x < 0 || x >= game->win_width || y < 0 || y >= game->win_height)
-		return ;
-	dst = game->screen_image.addr + (y * game->screen_image.line_length + x
-			* (game->screen_image.bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
 static void	init_new_window(t_game *game)
 {
 	int	screen_w;
@@ -78,6 +65,10 @@ static void	init_new_window(t_game *game)
 			game->win_height, "Cub3D");
 	if (!game->mlx_w)
 		error_exit("Erro\n ao criar janela\n");
+}
+
+static void init_image(t_game *game)
+{
 	game->screen_image.img_ptr = mlx_new_image(game->mlx,
 			game->win_width, game->win_height);
 	if (!game->screen_image.img_ptr)
@@ -92,7 +83,10 @@ static void	init_new_window(t_game *game)
 
 void	init_window(t_game *game)
 {
+	if (!game || !game->mlx )
+		error_exit("Erro\n ao inicializar MLX\n");
 	init_new_window(game);
+	init_image(game);
 	init_player_direction(game);
 	mlx_hook(game->mlx_w, 17, 0, close_window_x, game);
 	mlx_hook(game->mlx_w, 2, 1L << 0, handle_keypress, game);

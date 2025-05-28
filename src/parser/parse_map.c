@@ -3,33 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/27 14:06:49 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:05:14 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	capture_map(char *line, t_config *config)
-{
-	char	*tmp;
-
-	if (line == NULL)
-		return ;
-	tmp = line;
-	while (*line == ' ' || *line == '\t')
-		line++;
-	if (is_empty_line(line) || ft_strncmp(line, "NO ", 3) == 0
-		|| ft_strncmp(line, "SO ", 3) == 0
-		|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0
-		|| ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
-		return ;
-	config->map = ft_realloc_map(config->map, tmp);
-}
-
-char	**ft_realloc_map(char **old_map, char *new_line)
+static char	**ft_realloc_map(char **old_map, char *new_line)
 {
 	char	**new_map;
 	int		i;
@@ -51,6 +34,23 @@ char	**ft_realloc_map(char **old_map, char *new_line)
 	new_map[i] = NULL;
 	free(old_map);
 	return (new_map);
+}
+
+void	capture_map(char *line, t_config *config)
+{
+	char	*tmp;
+
+	if (line == NULL)
+		return ;
+	tmp = line;
+	while (*line == ' ' || *line == '\t')
+		line++;
+	if (is_empty_line(line) || ft_strncmp(line, "NO ", 3) == 0
+		|| ft_strncmp(line, "SO ", 3) == 0
+		|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0
+		|| ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
+		return ;
+	config->map = ft_realloc_map(config->map, tmp);
 }
 
 int	map_rows(char **map)

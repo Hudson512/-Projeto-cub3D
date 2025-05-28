@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/27 14:49:18 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:44:43 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ typedef struct s_ray
 	double		perp_wall_dist;
 }				t_ray;
 
-typedef struct s_draw {
+typedef struct s_draw
+{
 	int			dx;
 	int			dy;
 	int			sx;
@@ -125,46 +126,47 @@ typedef struct s_draw {
 	int			e2;
 }				t_draw;
 
+// validation general
+int				is_empty_line(char *line);
+int				free_matrix(char **mat);
+void			print_config(t_config *config);
+
 // Parse file
+int				parse_file(const char *filename, t_config *config);
+
+// validation map
 int				check_extension(const char *filename, char *str_ext);
 int				validate_map_at_end(const char *filename);
-int				is_empty_line(char *line);
-void			parse_exit(char *msg);
-void			sucess_exit(char *msg);
-void			error_exit(char *msg);
-void			capture_map(char *line, t_config *config);
-char			**ft_realloc_map(char **old_map, char *new_line);
-int				parse_file(const char *filename, t_config *config);
-void			capture_texture(char *line, t_config *config);
-void			capture_color(char *line, t_config *config);
-void			print_config(t_config *config);
-void			capture_position(char **map, t_config *config);
 void			validator_config(t_config *config);
-int				map_rows(char **map);
-int				map_cols(char **map);
 int				is_texture_valid(char *texture);
 int				check_texture_path(char *path);
 int				is_color_valid(t_color color);
+int				has_invalid_map_char(char **map);
 int				have_valid_wall(char **map);
 
-int				free_matrix(char **mat);
-int				has_invalid_map_char(char **map);
+// capture map data
+void			capture_texture(char *line, t_config *config);
+void			capture_color(char *line, t_config *config);
+void			capture_map(char *line, t_config *config);
+void			capture_position(char **map, t_config *config);
+int				map_rows(char **map);
+int				map_cols(char **map);
+
+// Exit functions
+void			parse_exit(char *msg);
+void			sucess_exit(char *msg);
+void			error_exit(char *msg);
+int			close_window_x(t_game *game);
 
 // Window initialization
 void			init_window(t_game *game);
-void			render_next_frame(t_game *game);
-void			my_mlx_pixel_put_to_image(t_game *game, int x, int y,
-					int color);
 
-// Eventos de teclado
-int				handle_keypress(int keycode, t_game *game);
-int				close_window_x(t_game *game);
-
-// movimento do jogador
-void			player_rotate(t_game *game, double angle);
-void			player_move(t_game *game, double move_x_component,
-					double move_y_component);
-void			player_zoom(t_game *game, double angle);
+// Rendering 3D
+void	render_next_frame(t_game *game);				
+void	calculate_wall_distance(t_game *game, t_ray *ray);
+void	draw_wall_line(t_game *game, t_ray *ray, int x);
+void	perform_dda(t_game *game, t_ray *ray);
+void	calculate_step_and_side_dist(t_game *game, t_ray *ray);
 
 // minimap
 void			render_minimap(t_game *game);
@@ -174,6 +176,19 @@ void			draw_minimap_background(t_game *game);
 void			draw_player_on_minimap(t_game *game);
 void			draw_line_on_minimap(t_game *game, int x0, int y0, int x1,
 					int y1, int color);
-int				verify_struct(t_game *game);
+
+// Pixel manipulation
+void			my_mlx_pixel_put_to_image(t_game *game, int x, int y,
+					int color);
+
+// Eventos
+int				handle_keypress(int keycode, t_game *game);
+
+// movimento do jogador
+void			player_rotate(t_game *game, double angle);
+void			player_move(t_game *game, double move_x_component,
+					double move_y_component);
+void			handle_zoom_out(t_game *game);
+void			handle_zoom_in(t_game *game);
 
 #endif

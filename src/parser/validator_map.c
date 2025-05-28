@@ -6,44 +6,13 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:01:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 10:18:43 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:23:10 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-// Verifica se o caractere é um dos válidos para o mapa
-static int	is_valid_map_char(char c)
-{
-	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W'
-		|| c == ' ');
-}
-
-int	has_invalid_map_char(char **map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (!is_valid_map_char(map[i][j]))
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-// Fim da verificação de caracteres inválidos
-
-// Verifica se a linha tem paredes horizontais
-int	check_around(char **map, int x, int y);
-
-int	ft_countline(char **map)
+static int	ft_countline(char **map)
 {
 	int	i;
 
@@ -55,21 +24,30 @@ int	ft_countline(char **map)
 	return (i);
 }
 
-int	ft_orizontalwall(char **line)
+static int	check_around(char **map, int x, int y)
 {
-	int	i;
-
-	i = 0;
-	while (line[i] != NULL)
-	{
-		if ((line[i][0] != '1') || (line[i][ft_strlen(line[i]) - 1] != '1'))
-			return (0);
-		i++;
-	}
+	if (((x - 1) < 0) || ((x + 1) >= ft_countline(map)))
+		return (0);
+	if (map[x - 1] && ((int)ft_strlen(map[x - 1]) > y) && map[x - 1][y] == ' ')
+		return (0);
+	else if (!map[x - 1] || ((int)ft_strlen(map[x - 1]) <= y))
+		return (0);
+	if (map[x + 1] && ((int)ft_strlen(map[x + 1]) > y) && map[x + 1][y] == ' ')
+		return (0);
+	else if (!map[x + 1] || ((int)ft_strlen(map[x + 1]) <= y))
+		return (0);
+	if (map[x][y - 1] && map[x][y - 1] == ' ')
+		return (0);
+	else if (map[x][y - 1] == '\0')
+		return (0);
+	if (map[x][y + 1] && map[x][y + 1] == ' ')
+		return (0);
+	else if (map[x][y + 1] == '\0')
+		return (0);
 	return (1);
 }
 
-int	ft_find_leak(char **tab)
+static int	ft_find_leak(char **tab)
 {
 	int	x;
 	int	y;
@@ -93,26 +71,17 @@ int	ft_find_leak(char **tab)
 	return (0);
 }
 
-int	check_around(char **map, int x, int y)
+static int	ft_orizontalwall(char **line)
 {
-	if (((x - 1) < 0) || ((x + 1) >= ft_countline(map)))
-		return (0);
-	if (map[x - 1] && ((int)ft_strlen(map[x - 1]) > y) && map[x - 1][y] == ' ')
-		return (0);
-	else if (!map[x - 1] || ((int)ft_strlen(map[x - 1]) <= y))
-		return (0);
-	if (map[x + 1] && ((int)ft_strlen(map[x + 1]) > y) && map[x + 1][y] == ' ')
-		return (0);
-	else if (!map[x + 1] || ((int)ft_strlen(map[x + 1]) <= y))
-		return (0);
-	if (map[x][y - 1] && map[x][y - 1] == ' ')
-		return (0);
-	else if (map[x][y - 1] == '\0')
-		return (0);
-	if (map[x][y + 1] && map[x][y + 1] == ' ')
-		return (0);
-	else if (map[x][y + 1] == '\0')
-		return (0);
+	int	i;
+
+	i = 0;
+	while (line[i] != NULL)
+	{
+		if ((line[i][0] != '1') || (line[i][ft_strlen(line[i]) - 1] != '1'))
+			return (0);
+		i++;
+	}
 	return (1);
 }
 

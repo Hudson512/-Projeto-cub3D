@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/27 10:42:19 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:30:49 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,43 +80,4 @@ void	print_config(t_config *config)
 		printf("\n");
 		i++;
 	}
-}
-
-static int	is_map_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] == ' ')
-		i++;
-	return (line[i] == '1');
-}
-
-int	validate_map_at_end(const char *file_path)
-{
-	int		fd;
-	char	*line;
-	int		in_map;
-
-	in_map = 0;
-	fd = open(file_path, O_RDONLY);
-	if (fd < 0)
-		return (ft_putstr_fd("Error\nNao foi possivel abrir o arquivo\n", 2), 0);
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		if (!in_map && is_map_line(line))
-			in_map = 1;
-		else if (in_map && !is_map_line(line) && !is_empty_line(line))
-		{
-			free(line);
-			close(fd);
-			ft_putstr_fd("Error\nMapa não é a última parte do arquivo .cub\n", 2);
-			return (0);
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	return (1);
 }

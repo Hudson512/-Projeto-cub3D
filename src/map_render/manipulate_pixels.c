@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_exit.c                                       :+:      :+:    :+:   */
+/*   manipulate_pixels.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 10:31:50 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/14 14:57:05 by hmateque         ###   ########.fr       */
+/*   Created: 2025/05/28 10:46:14 by hmateque          #+#    #+#             */
+/*   Updated: 2025/05/28 10:46:55 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	parse_exit(char *msg)
+void	my_mlx_pixel_put_to_image(t_game *game, int x, int y, int color)
 {
-	ft_putstr_fd(msg, 2);
-	free_mem(get_mem_address());
-	exit(1);
-}
+	char	*dst;
 
-void	sucess_exit(char *msg)
-{
-	ft_putstr_fd(msg, 2);
-	free_mem(get_mem_address());
-	exit(0);
-}
-
-void	error_exit(char *msg)
-{
-	ft_putstr_fd(msg, 2);
-	free_mem(get_mem_address());
-	exit(1);
+	if (!game || !game->screen_image.addr)
+		return ;
+	if (x < 0 || x >= game->win_width || y < 0 || y >= game->win_height)
+		return ;
+	dst = game->screen_image.addr + (y * game->screen_image.line_length + x
+			* (game->screen_image.bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }

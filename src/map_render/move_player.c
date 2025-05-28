@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 12:40:05 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/27 14:40:01 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:18:25 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,51 @@ void	player_move(t_game *game, double move_x_component, double move_y_component)
 	}
 }
 
-void	player_zoom(t_game *game, double angle)
+void	handle_zoom_out(t_game *game)
 {
-	if (!game)
-		return ;
-	game->move_speed += angle * 0.01; // Ajuste a sensibilidade do zoom
-	if (game->move_speed < 0.01) // Limite mínimo de velocidade
-		game->move_speed = 0.01;
-	else if (game->move_speed > 0.5) // Limite máximo de velocidade
-		game->move_speed = 0.5;
+	int		can_zoom;
+	double	next_plane_x;
+	double	next_plane_y;
+
+	next_plane_x = game->plane_x * (1.0 + ZOOM_FACTOR);
+	next_plane_y = game->plane_y * (1.0 + ZOOM_FACTOR);
+	can_zoom = 1;
+	if (fabs(game->plane_x) > 1e-6
+		&& fabs(next_plane_x) > MAX_PLANE_ACTIVE_COMPONENT)
+		can_zoom = 0;
+	if (fabs(game->plane_y) > 1e-6
+		&& fabs(next_plane_y) > MAX_PLANE_ACTIVE_COMPONENT)
+		can_zoom = 0;
+	if (can_zoom)
+	{
+		game->plane_x = next_plane_x;
+		game->plane_y = next_plane_y;
+		game->fov_scale_factor /= (1.0 + ZOOM_FACTOR);
+	}
+}
+
+void	handle_zoom_in(t_game *game)
+{
+	int		can_zoom;
+	double	next_plane_x;
+	double	next_plane_y;
+
+	can_zoom = 1;
+	next_plane_x = game->plane_x * (1.0 - ZOOM_FACTOR);
+	next_plane_y = game->plane_y * (1.0 - ZOOM_FACTOR);
+	if (fabs(game->plane_x) > 1e-6
+		&& fabs(next_plane_x) < MIN_PLANE_ACTIVE_COMPONENT)
+		can_zoom = 0;
+	if (fabs(game->plane_y) > 1e-6
+		&& fabs(next_plane_y) < MIN_PLANE_ACTIVE_COMPONENT)
+		can_zoom = 0;
+	if (fabs(game->plane_x) < MIN_PLANE_ACTIVE_COMPONENT
+		&& fabs(game->plane_y) < MIN_PLANE_ACTIVE_COMPONENT)
+		can_zoom = 0;
+	if (can_zoom)
+	{
+		game->plane_x = next_plane_x;
+		game->plane_y = next_plane_y;
+		game->fov_scale_factor /= (1.0 - ZOOM_FACTOR);
+	}
 }
