@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:43:34 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 11:33:22 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:53:30 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ static void	fill_background(t_game *game)
 
 static int	verify_struct(t_game *game)
 {
-	if (!game || !game->mlx || !game->mlx_w
-		|| !game->screen_image.img_ptr || !game->screen_image.addr)
+	if (!game || !game->mlx || !game->mlx_w || !game->screen_image.img_ptr
+		|| !game->screen_image.addr)
 	{
-		ft_putstr_fd("Error:\n Game structure is not properly initialized.\n", 2);
+		ft_putstr_fd("Error:\n Game structure is not properly initialized.\n",
+			2);
 		return (0);
 	}
 	if (!game->config.map || game->config.map_width <= 0
@@ -97,7 +98,6 @@ void	render_next_frame(t_game *game)
 		x++;
 	}
 	render_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->mlx_w,
-		game->screen_image.img_ptr, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->mlx_w, game->screen_image.img_ptr,
+		0, 0);
 }
-

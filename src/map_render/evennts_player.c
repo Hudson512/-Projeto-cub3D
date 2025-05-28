@@ -6,13 +6,11 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 12:38:53 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 11:20:04 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:50:55 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-
 
 int	handle_keypress(int keycode, t_game *game)
 {

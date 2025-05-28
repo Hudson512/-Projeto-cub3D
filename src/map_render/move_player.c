@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 12:40:05 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 11:18:25 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:52:59 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	player_rotate(t_game *game, double angle)
 	game->plane_y = old_plane_x * sin(angle) + game->plane_y * cos(angle);
 }
 
-void	player_move(t_game *game, double move_x_component, double move_y_component)
+void	player_move(t_game *game, double move_x_component,
+		double move_y_component)
 {
 	double	new_player_x;
 	double	new_player_y;
@@ -41,8 +42,8 @@ void	player_move(t_game *game, double move_x_component, double move_y_component)
 	map_check_x = (int)new_player_x;
 	map_check_y = (int)new_player_y;
 	if (map_check_y >= 0 && map_check_y < game->config.map_height
-		&& game->config.map[map_check_y] != NULL
-		&& map_check_x >= 0 && map_check_x < (int)ft_strlen(game->config.map[map_check_y])
+		&& game->config.map[map_check_y] != NULL && map_check_x >= 0
+		&& map_check_x < (int)ft_strlen(game->config.map[map_check_y])
 		&& game->config.map[map_check_y][map_check_x] != '1')
 	{
 		game->config.player_x = new_player_x;
