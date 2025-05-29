@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_core_aux.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:39:07 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 11:39:45 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:08:16 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,43 @@
 
 void	draw_wall_line(t_game *game, t_ray *ray, int x)
 {
-	int	line_height;
-	int	draw_start;
-	int	draw_end;
-	int	color;
-	int	y;
+	t_draw_wall_line	vars;
+	t_texture			*tex;
 
-	line_height = (int)((game->win_height / ray->perp_wall_dist)
-			* game->fov_scale_factor);
-	draw_start = -line_height / 2 + game->win_height / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	draw_end = line_height / 2 + game->win_height / 2;
-	if (draw_end >= game->win_height)
-		draw_end = game->win_height - 1;
-	color = 0x00909090;
-	if (ray->side == 1)
-		color = 0x00707070;
-	y = draw_start;
-	while (y <= draw_end)
+	if (ray->side == 0 && ray->dir_x < 0)
+		tex = &game->textures.west;
+	else if (ray->side == 0 && ray->dir_x > 0)
+		tex = &game->textures.east;
+	else if (ray->side == 1 && ray->dir_y < 0)
+		tex = &game->textures.north;
+	else
+		tex = &game->textures.south;
+	vars.line_height = (int)((game->win_height / ray->perp_wall_dist) * game->fov_scale_factor);
+	vars.draw_start = -vars.line_height / 2 + game->win_height / 2;
+	if (vars.draw_start < 0)
+		vars.draw_start = 0;
+	vars.draw_end = vars.line_height / 2 + game->win_height / 2;
+	if (vars.draw_end >= game->win_height)
+		vars.draw_end = game->win_height - 1;
+	if (ray->side == 0)
+		vars.wall_x = ray->pos_y + ray->perp_wall_dist * ray->dir_y;
+	else
+		vars.wall_x = ray->pos_x + ray->perp_wall_dist * ray->dir_x;
+	vars.wall_x -= floor(vars.wall_x);
+	vars.tex_x = (int)(vars.wall_x * (double)tex->width);
+	if ((ray->side == 0 && ray->dir_x > 0)
+		|| (ray->side == 1 && ray->dir_y < 0))
+		vars.tex_x = tex->width - vars.tex_x - 1;
+	vars.y = vars.draw_start;
+	while (vars.y <= vars.draw_end)
 	{
-		my_mlx_pixel_put_to_image(game, x, y, color);
-		y++;
+		vars.d = vars.y * 256 - game->win_height * 128 + vars.line_height * 128;
+		vars.tex_y = ((vars.d * tex->height) / vars.line_height) / 256;
+		vars.offset = vars.tex_y
+			* tex->line_length + vars.tex_x * (tex->bpp / 8);
+		vars.color = *(int *)(tex->addr + vars.offset);
+		my_mlx_pixel_put_to_image(game, x, vars.y, vars.color);
+		vars.y++;
 	}
 }
 
