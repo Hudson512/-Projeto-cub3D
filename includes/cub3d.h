@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 12:45:16 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:42:20 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,24 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+typedef struct s_texture {
+	void		*img;
+	char		*addr;
+	int			width;
+	int			height;
+	int			bpp;
+	int			line_length;
+	int			endian;
+}				t_texture;
+
+typedef struct s_textures
+{
+	t_texture	north;
+	t_texture	south;
+	t_texture	east;
+	t_texture	west;
+}				t_textures;
 
 typedef struct s_color
 {
@@ -96,6 +114,7 @@ typedef struct s_game
 	double		fov_scale_factor;
 	t_config	config;
 	t_img		screen_image;
+	t_textures	textures;
 }				t_game;
 
 typedef struct s_ray
@@ -103,6 +122,8 @@ typedef struct s_ray
 	double		camera_x;
 	double		dir_x;
 	double		dir_y;
+	double		pos_x;
+	double		pos_y;
 	int			map_x;
 	int			map_y;
 	double		side_dist_x;
@@ -125,6 +146,24 @@ typedef struct s_draw
 	int			err;
 	int			e2;
 }				t_draw;
+
+typedef struct	s_draw_wall_line
+{
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	double		wall_x;
+	int			y;
+	int			tex_x;
+	int			d;
+	int			tex_y;
+	int			offset;
+	int			color;
+	int			start;
+	int	end;
+	int	tex_step;
+	int	tex_pos;
+}				t_draw_wall_line;
 
 // validation general
 int				is_empty_line(char *line);

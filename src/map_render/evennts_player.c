@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 12:38:53 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 12:27:29 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:40:54 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int	handle_movement_keys(int keycode, t_game *game)
 {
+	static int	i;
+
 	if (keycode == KEY_W)
 		player_move(game, game->dir_x * game->move_speed,
 			game->dir_y * game->move_speed);
@@ -27,7 +29,10 @@ static int	handle_movement_keys(int keycode, t_game *game)
 		player_move(game, game->plane_x * game->move_speed,
 			game->plane_y * game->move_speed);
 	else if (keycode == KEY_LEFT_ARROW)
+	{
 		player_rotate(game, -game->rot_speed);
+		printf("Player Left Rotate = %d\n", i++);
+	}
 	else if (keycode == KEY_RIGHT_ARROW)
 		player_rotate(game, game->rot_speed);
 	else
