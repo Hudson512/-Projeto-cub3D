@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:29:51 by hmateque          #+#    #+#             */
-/*   Updated: 2025/04/29 10:50:52 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:33:05 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	capture_position(char **map, t_config *config)
 		{
 			if (is_valid_player(map[i][j]))
 			{
-				config->player_x = j;
-				config->player_y = i;
+				config->player_x = j + 0.5;
+				config->player_y = i + 0.5;
 				config->player_dir = map[i][j];
 				return ;
 			}

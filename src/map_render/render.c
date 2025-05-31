@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:43:34 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 14:45:24 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:34:01 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	rgb_to_int(t_color color)
 static void	init_ray_values(t_game *game, int x, t_ray *ray)
 {
 	ray->camera_x = 2 * x / (double)game->win_width - 1;
-	ray->pos_x = game->config.player_x;
+	ray->pos_x = game->config.player_x ;
 	ray->pos_y = game->config.player_y;
 	ray->dir_x = game->dir_x + game->plane_x * ray->camera_x;
 	ray->dir_y = game->dir_y + game->plane_y * ray->camera_x;
