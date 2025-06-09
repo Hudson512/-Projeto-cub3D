@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CUB3D_EXEC="./cub3D"
+CUB3D_EXEC="valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./cub3D"
 VALID_DIR="maps/valid"
 INVALID_DIR="maps/invalid"
 GREEN="\033[0;32m"

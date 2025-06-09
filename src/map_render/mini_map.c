@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 10:53:37 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/30 20:13:51 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/03 10:02:09 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	draw_player_on_minimap(t_game *game)
 		MINIMAP_PLAYER_SIZE, MINIMAP_PLAYER_COLOR);
 }
 
-// Função para desenhar linha (algoritmo de Bresenham)
 static void	keep_draw_line_on_minimap(t_game *game, int *x, int *y, t_draw draw)
 {
 	while (1)

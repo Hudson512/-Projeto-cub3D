@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:43:34 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/30 20:34:01 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:17:38 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ static int	verify_struct(t_game *game)
 	if (!game || !game->mlx || !game->mlx_w || !game->screen_image.img_ptr
 		|| !game->screen_image.addr)
 	{
-		ft_putstr_fd("Error:\n Game structure is not properly initialized.\n",
+		ft_putstr_fd("Error:\Erro na estrutura do jogo.\n",
 			2);
 		return (0);
 	}
 	if (!game->config.map || game->config.map_width <= 0
 		|| game->config.map_height <= 0)
 	{
-		ft_putstr_fd("Error:\n Invalid map configuration.\n", 2);
+		ft_putstr_fd("Error:\nConfiguração errada no mapa.\n", 2);
 		return (0);
 	}
 	return (1);
@@ -84,9 +84,11 @@ void	render_next_frame(t_game *game)
 
 	if (!verify_struct(game))
 		return ;
-	x = 0;
+	x = -1;
+	game->minimap = 0;
+	game->zoom = 0;
 	fill_background(game);
-	while (x < game->win_width)
+	while (++x < game->win_width)
 	{
 		init_ray_values(game, x, &ray);
 		if (ray.map_x >= 0 && ray.map_x < game->config.map_width
@@ -97,9 +99,9 @@ void	render_next_frame(t_game *game)
 			calculate_wall_distance(game, &ray);
 			draw_wall_line(game, &ray, x);
 		}
-		x++;
 	}
-	render_minimap(game);
+	if (game->minimap)
+		render_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->mlx_w, game->screen_image.img_ptr,
 		0, 0);
 }

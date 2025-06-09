@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/30 18:42:20 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/06/03 10:04:48 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ typedef struct s_game
 	double		rot_speed;
 	int			win_width;
 	int			win_height;
+	int			minimap;
+	int			zoom;
 	double		fov_scale_factor;
 	t_config	config;
 	t_img		screen_image;
@@ -147,22 +149,22 @@ typedef struct s_draw
 	int			e2;
 }				t_draw;
 
-typedef struct	s_draw_wall_line
+typedef struct s_draw_wall_line
 {
 	int			line_height;
 	int			draw_start;
 	int			draw_end;
+	int			start;
+	int			end;
 	double		wall_x;
 	int			y;
-	int			tex_x;
 	int			d;
+	int			tex_x;
 	int			tex_y;
-	int			offset;
+	size_t		offset;
 	int			color;
-	int			start;
-	int	end;
-	int	tex_step;
-	int	tex_pos;
+	double		tex_step;
+	double		tex_pos;
 }				t_draw_wall_line;
 
 // validation general

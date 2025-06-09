@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:31:50 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 11:45:23 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/03 09:15:55 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ int	close_window_x(t_game *game)
 	if (game && game->mlx && game->mlx_w)
 	{
 		mlx_destroy_image(game->mlx, game->screen_image.img_ptr);
+		mlx_destroy_image(game->mlx, game->textures.north.img);
+		mlx_destroy_image(game->mlx, game->textures.south.img);
+		mlx_destroy_image(game->mlx, game->textures.east.img);
+		mlx_destroy_image(game->mlx, game->textures.west.img);
 		mlx_destroy_window(game->mlx, game->mlx_w);
 		mlx_destroy_display(game->mlx);
 	}

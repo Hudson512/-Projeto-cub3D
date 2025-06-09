@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 12:40:05 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 11:52:59 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/03 10:05:53 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	handle_zoom_out(t_game *game)
 	double	next_plane_x;
 	double	next_plane_y;
 
+	if (!game->zoom)
+		return ;
 	next_plane_x = game->plane_x * (1.0 + ZOOM_FACTOR);
 	next_plane_y = game->plane_y * (1.0 + ZOOM_FACTOR);
 	can_zoom = 1;
@@ -80,6 +82,8 @@ void	handle_zoom_in(t_game *game)
 	double	next_plane_x;
 	double	next_plane_y;
 
+	if (!game->zoom)
+		return ;
 	can_zoom = 1;
 	next_plane_x = game->plane_x * (1.0 - ZOOM_FACTOR);
 	next_plane_y = game->plane_y * (1.0 - ZOOM_FACTOR);
