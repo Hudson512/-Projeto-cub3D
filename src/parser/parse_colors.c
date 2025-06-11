@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_colors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:06 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/12 11:20:22 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:24:24 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,43 @@ static int	count_quotes(char *line)
 	return (count);
 }
 
+static int	check_digit_count(char *line, int start)
+{
+	int	count;
+	int	i;
+
+	i = start;
+	count = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (ft_isdigit(line[i]) != 1)
+		return (-1);
+	while (line[i] && ft_isdigit(line[i]))
+	{
+		count++;
+		i++;
+	}
+	if (count <= 3)
+		return (count);
+	return (-1);
+}
+
+static int	is_digit_string(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] != ',' && line[i] != '\n' && i < 3)
+	{
+		if (!ft_isdigit(line[i]) && line[i] != ' ')
+			return (0);
+		i++;
+	}
+	if (i == 0 || i > 3)
+		return (0);
+	return (1);
+}
+
 static int	parse_number(char *line, int *i)
 {
 	int	num;
@@ -34,7 +71,7 @@ static int	parse_number(char *line, int *i)
 		return (-1);
 	while (line[*i] && line[*i] == ' ')
 		(*i)++;
-	if (ft_isdigit(line[*i]) != 2048)
+	if (is_digit_string(&line[*i]) == 0 || check_digit_count(line, *i) == -1)
 		return (-1);
 	num = ft_atoi(&line[*i]);
 	while (line[*i] && line[*i] != ',')

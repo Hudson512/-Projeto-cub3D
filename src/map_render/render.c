@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:43:34 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/05 16:17:38 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/06/11 14:48:30 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	verify_struct(t_game *game)
 	if (!game || !game->mlx || !game->mlx_w || !game->screen_image.img_ptr
 		|| !game->screen_image.addr)
 	{
-		ft_putstr_fd("Error:\Erro na estrutura do jogo.\n",
+		ft_putstr_fd("Error:\nErro na estrutura do jogo.\n",
 			2);
 		return (0);
 	}
