@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 10:05:14 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:03:45 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,39 @@ static char	**ft_realloc_map(char **old_map, char *new_line)
 void	capture_map(char *line, t_config *config)
 {
 	char	*tmp;
+	int		empty;
 
 	if (line == NULL)
 		return ;
 	tmp = line;
 	while (*line == ' ' || *line == '\t')
 		line++;
-	if (is_empty_line(line) || ft_strncmp(line, "NO ", 3) == 0
-		|| ft_strncmp(line, "SO ", 3) == 0
+	empty = is_empty_line(line);
+	
+	// Se já encontramos uma linha vazia depois do mapa e tem conteúdo, erro
+	if (config->found_empty && !empty && !ft_strncmp(line, "NO ", 3) == 0
+		&& !ft_strncmp(line, "SO ", 3) == 0 && !ft_strncmp(line, "WE ", 3) == 0 
+		&& !ft_strncmp(line, "EA ", 3) == 0 && !ft_strncmp(line, "F ", 2) == 0 
+		&& !ft_strncmp(line, "C ", 2) == 0)
+		parse_exit("Error\nConteudo invalido apos o mapa\n");
+	
+	// Ignora linhas de textura/cor
+	if (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0
 		|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0
 		|| ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
 		return ;
-	config->map = ft_realloc_map(config->map, tmp);
+	
+	// Se é uma linha não vazia que não é textura/cor, mapa começou
+	if (!empty)
+		config->map_started = 1;
+	
+	// Se o mapa começou e encontrou linha vazia, marca flag
+	if (config->map_started && empty)
+		config->found_empty = 1;
+	
+	// Se não é linha vazia e o mapa começou, adiciona à matriz
+	if (!empty && config->map_started)
+		config->map = ft_realloc_map(config->map, tmp);
 }
 
 int	map_rows(char **map)

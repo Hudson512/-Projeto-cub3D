@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/03 10:04:48 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:03:45 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ typedef struct s_config
 	double		player_x;
 	double		player_y;
 	char		player_dir;
+	int			map_started;   // Nova flag para controlar início do mapa
+	int			found_empty;   // Flag para indicar se encontrou linha vazia após início do mapa
 }				t_config;
 
 typedef struct s_img

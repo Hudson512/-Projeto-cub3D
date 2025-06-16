@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:46 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/03 09:36:32 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/06/16 08:45:02 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv)
 	ft_memset(&game, 0, sizeof(t_game));
 	if (parse_file(argv[1], &config))
 		return (1);
+	print_config(&config);
 	game.mlx = mlx_init();
 	if (!game.mlx)
 		error_exit("Error\nFalha ao inicializar MLX\n");
