@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_colors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:06 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/11 15:24:24 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:54:33 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,43 +24,6 @@ static int	count_quotes(char *line)
 		line++;
 	}
 	return (count);
-}
-
-static int	check_digit_count(char *line, int start)
-{
-	int	count;
-	int	i;
-
-	i = start;
-	count = 0;
-	while (line[i] && line[i] == ' ')
-		i++;
-	if (ft_isdigit(line[i]) != 1)
-		return (-1);
-	while (line[i] && ft_isdigit(line[i]))
-	{
-		count++;
-		i++;
-	}
-	if (count <= 3)
-		return (count);
-	return (-1);
-}
-
-static int	is_digit_string(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] && line[i] != ',' && line[i] != '\n' && i < 3)
-	{
-		if (!ft_isdigit(line[i]) && line[i] != ' ')
-			return (0);
-		i++;
-	}
-	if (i == 0 || i > 3)
-		return (0);
-	return (1);
 }
 
 static int	parse_number(char *line, int *i)
@@ -81,6 +44,32 @@ static int	parse_number(char *line, int *i)
 	return (num);
 }
 
+static void	set_floor_color(char *line, t_config *config, int *i)
+{
+	if (config->floor_color_set)
+		parse_exit("Error\nCor do chão (F) já foi definida\n");
+	(*i)++;
+	config->floor_color.r = parse_number(line, i);
+	config->floor_color.g = parse_number(line, i);
+	config->floor_color.b = parse_number(line, i);
+	if (config->floor_color.r != -1 && config->floor_color.g != -1
+		&& config->floor_color.b != -1)
+		config->floor_color_set = 1;
+}
+
+static void	set_ceiling_color(char *line, t_config *config, int *i)
+{
+	if (config->ceiling_color_set)
+		parse_exit("Error\nCor do teto (C) já foi definida\n");
+	(*i)++;
+	config->ceiling_color.r = parse_number(line, i);
+	config->ceiling_color.g = parse_number(line, i);
+	config->ceiling_color.b = parse_number(line, i);
+	if (config->ceiling_color.r != -1 && config->ceiling_color.g != -1
+		&& config->ceiling_color.b != -1)
+		config->ceiling_color_set = 1;
+}
+
 void	capture_color(char *line, t_config *config)
 {
 	int	i;
@@ -91,17 +80,7 @@ void	capture_color(char *line, t_config *config)
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] == 'F')
-	{
-		i++;
-		config->floor_color.r = parse_number(line, &i);
-		config->floor_color.g = parse_number(line, &i);
-		config->floor_color.b = parse_number(line, &i);
-	}
+		set_floor_color(line, config, &i);
 	else if (line[i] == 'C')
-	{
-		i++;
-		config->ceiling_color.r = parse_number(line, &i);
-		config->ceiling_color.g = parse_number(line, &i);
-		config->ceiling_color.b = parse_number(line, &i);
-	}
+		set_ceiling_color(line, config, &i);
 }

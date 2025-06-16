@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:54:27 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 10:30:17 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:20:00 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	validate_map_at_end(const char *file_path)
 		{
 			free(line);
 			close(fd);
-			ft_putstr_fd("Error\nMapa não é a última parte do arquivo .cub\n", 2);
+			ft_putstr_fd("Error\nErro na configuração do mapa\n", 2);
 			return (0);
 		}
 		free(line);

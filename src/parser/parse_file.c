@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/16 09:03:45 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:43:22 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ static void	init_config(t_config *config)
 	config->player_dir = '\0';
 	config->map_started = 0;
 	config->found_empty = 0;
+	config->floor_color_set = 0;
+	config->ceiling_color_set = 0;
+	config->north_texture_set = 0;
+	config->south_texture_set = 0;
+	config->west_texture_set = 0;
+	config->east_texture_set = 0;
 }
 
 int	parse_file(const char *filename, t_config *config)

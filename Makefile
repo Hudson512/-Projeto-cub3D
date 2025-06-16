@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
+#    By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 15:53:23 by hmateque          #+#    #+#              #
-#    Updated: 2025/06/03 08:53:54 by lantonio         ###   ########.fr        #
+#    Updated: 2025/06/16 09:50:07 by hmateque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS =	src/main.c\
 		src/parser/parse_colors.c\
 		src/parser/parse_file.c\
 		src/parser/parse_map.c\
+		src/parser/parse_aux.c\
 		src/parser/parse_position.c\
 		src/parser/parse_textures.c\
 		src/parser/validator_aux.c\

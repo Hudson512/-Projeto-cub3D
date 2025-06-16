@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/16 09:03:45 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:54:43 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-typedef struct s_texture {
+typedef struct s_texture
+{
 	void		*img;
 	char		*addr;
 	int			width;
@@ -88,8 +89,14 @@ typedef struct s_config
 	double		player_x;
 	double		player_y;
 	char		player_dir;
-	int			map_started;   // Nova flag para controlar início do mapa
-	int			found_empty;   // Flag para indicar se encontrou linha vazia após início do mapa
+	int			map_started;
+	int			found_empty;
+	int			floor_color_set;
+	int			ceiling_color_set;
+	int			north_texture_set;
+	int			south_texture_set;
+	int			west_texture_set;
+	int			east_texture_set;
 }				t_config;
 
 typedef struct s_img
@@ -169,6 +176,11 @@ typedef struct s_draw_wall_line
 	double		tex_pos;
 }				t_draw_wall_line;
 
+// functions auxiliary
+char			*ft_strdup_texture(const char *s);
+int				check_digit_count(char *line, int start);
+int				is_digit_string(char *line);
+
 // validation general
 int				is_empty_line(char *line);
 int				free_matrix(char **mat);
@@ -205,7 +217,7 @@ int				close_window_x(t_game *game);
 void			init_window(t_game *game);
 
 // Rendering 3D
-void			render_next_frame(t_game *game);				
+void			render_next_frame(t_game *game);
 void			calculate_wall_distance(t_game *game, t_ray *ray);
 void			draw_wall_line(t_game *game, t_ray *ray, int x);
 void			perform_dda(t_game *game, t_ray *ray);
@@ -213,8 +225,8 @@ void			calculate_step_and_side_dist(t_game *game, t_ray *ray);
 
 // minimap
 void			render_minimap(t_game *game);
-void			draw_minimap_square(t_game *game, int *top_left,
-					int size, int color);
+void			draw_minimap_square(t_game *game, int *top_left, int size,
+					int color);
 void			draw_minimap_background(t_game *game);
 void			draw_player_on_minimap(t_game *game);
 void			draw_line_on_minimap(t_game *game, int *x, int *y);
