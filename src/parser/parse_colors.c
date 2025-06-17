@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:06 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/16 09:54:33 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/17 10:30:44 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	parse_number(char *line, int *i)
 		(*i)++;
 	if (is_digit_string(&line[*i]) == 0 || check_digit_count(line, *i) == -1)
 		return (-1);
-	num = ft_atoi(&line[*i]);
+	num = ft_atoi_color(&line[*i]);
 	while (line[*i] && line[*i] != ',')
 		(*i)++;
 	if (line[*i] == ',')

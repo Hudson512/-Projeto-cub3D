@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 09:49:18 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/16 09:54:05 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/17 10:30:27 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,33 @@ int	is_digit_string(char *line)
 	if (i == 0 || i > 3)
 		return (0);
 	return (1);
+}
+
+int	ft_atoi_color(const char *nptr)
+{
+	char	*nbr;
+	int		i;
+	int		sign;
+	int		res;
+
+	nbr = (char *)nptr;
+	i = 0;
+	sign = 1;
+	res = 0;
+	while (nbr[i] == 32 || (nbr[i] >= 9 && nbr[i] <= 13))
+		i++;
+	while (nbr[i])
+	{
+		if (nbr[i] == ' ')
+		{
+			i++;
+			continue ;
+		}
+		if (ft_isdigit(nbr[i]))
+			res = res * 10 + (nbr[i] - '0');
+		else
+			break ;
+		i++;
+	}
+	return (res * sign);
 }

@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/16 09:54:43 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/17 10:30:39 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ typedef struct s_draw_wall_line
 char			*ft_strdup_texture(const char *s);
 int				check_digit_count(char *line, int start);
 int				is_digit_string(char *line);
+int				ft_atoi_color(const char *nptr);
 
 // validation general
 int				is_empty_line(char *line);

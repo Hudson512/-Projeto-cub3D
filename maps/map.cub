@@ -4,7 +4,7 @@ WE ./textures/p_a.xpm
 EA ./textures/p_a.xpm
 
 C 225, 234, 250
-F 25, 255, 30
+F 25       50, 255, 30
 
 
 
