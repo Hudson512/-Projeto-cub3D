@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/16 09:51:28 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:16:09 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	capture_map(char *line, t_config *config)
 		&& !ft_strncmp(line, "SO ", 3) == 0 && !ft_strncmp(line, "WE ", 3) == 0
 		&& !ft_strncmp(line, "EA ", 3) == 0 && !ft_strncmp(line, "F ", 2) == 0
 		&& !ft_strncmp(line, "C ", 2) == 0)
-		parse_exit("Error\nErro na configuração do mapa\n");
+		config->south_texture_set += 1;
 	if (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0
 		|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0
 		|| ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)

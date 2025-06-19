@@ -6,11 +6,9 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/16 09:43:22 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:28:58 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// Criar a funcao parse_file(argv[1], &config)
 
 #include "../../includes/cub3d.h"
 

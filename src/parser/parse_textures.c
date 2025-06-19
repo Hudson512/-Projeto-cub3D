@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:13 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/16 09:49:47 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:19:44 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,34 @@
 
 static void	set_north_texture(char *line, t_config *config)
 {
-	if (config->north_texture_set)
-		parse_exit("Error\nTextura Norte (NO) já foi definida\n");
 	config->north_texture = ft_strdup_texture(line);
 	collect_mem(config->north_texture);
 	if (config->north_texture)
-		config->north_texture_set = 1;
+		config->north_texture_set += 1;
 }
 
 static void	set_south_texture(char *line, t_config *config)
 {
-	if (config->south_texture_set)
-		parse_exit("Error\nTextura Sul (SO) já foi definida\n");
 	config->south_texture = ft_strdup_texture(line);
 	collect_mem(config->south_texture);
 	if (config->south_texture)
-		config->south_texture_set = 1;
+		config->south_texture_set += 1;
 }
 
 static void	set_west_texture(char *line, t_config *config)
 {
-	if (config->west_texture_set)
-		parse_exit("Error\nTextura Oeste (WE) já foi definida\n");
 	config->west_texture = ft_strdup_texture(line);
 	collect_mem(config->west_texture);
 	if (config->west_texture)
-		config->west_texture_set = 1;
+		config->west_texture_set += 1;
 }
 
 static void	set_east_texture(char *line, t_config *config)
 {
-	if (config->east_texture_set)
-		parse_exit("Error\nTextura Leste (EA) já foi definida\n");
 	config->east_texture = ft_strdup_texture(line);
 	collect_mem(config->east_texture);
 	if (config->east_texture)
-		config->east_texture_set = 1;
+		config->east_texture_set += 1;
 }
 
 void	capture_texture(char *line, t_config *config)

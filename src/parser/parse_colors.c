@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:06 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/17 10:30:44 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:19:56 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,24 @@ static int	parse_number(char *line, int *i)
 
 static void	set_floor_color(char *line, t_config *config, int *i)
 {
-	if (config->floor_color_set)
-		parse_exit("Error\nCor do chão (F) já foi definida\n");
 	(*i)++;
 	config->floor_color.r = parse_number(line, i);
 	config->floor_color.g = parse_number(line, i);
 	config->floor_color.b = parse_number(line, i);
 	if (config->floor_color.r != -1 && config->floor_color.g != -1
 		&& config->floor_color.b != -1)
-		config->floor_color_set = 1;
+		config->floor_color_set += 1;
 }
 
 static void	set_ceiling_color(char *line, t_config *config, int *i)
 {
-	if (config->ceiling_color_set)
-		parse_exit("Error\nCor do teto (C) já foi definida\n");
 	(*i)++;
 	config->ceiling_color.r = parse_number(line, i);
 	config->ceiling_color.g = parse_number(line, i);
 	config->ceiling_color.b = parse_number(line, i);
 	if (config->ceiling_color.r != -1 && config->ceiling_color.g != -1
 		&& config->ceiling_color.b != -1)
-		config->ceiling_color_set = 1;
+		config->ceiling_color_set += 1;
 }
 
 void	capture_color(char *line, t_config *config)
@@ -80,7 +76,11 @@ void	capture_color(char *line, t_config *config)
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] == 'F')
+	{
 		set_floor_color(line, config, &i);
+	}
 	else if (line[i] == 'C')
+	{
 		set_ceiling_color(line, config, &i);
+	}
 }
