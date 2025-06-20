@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_core_aux.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:39:07 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/02 10:10:45 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:43:57 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 static t_texture	*select_texture(t_game *game, t_ray *ray)
 {
 	if (ray->side == 0 && ray->dir_x < 0)
-		return (&game->textures.west);
-	else if (ray->side == 0 && ray->dir_x > 0)
 		return (&game->textures.east);
+	else if (ray->side == 0 && ray->dir_x > 0)
+		return (&game->textures.west);
 	else if (ray->side == 1 && ray->dir_y < 0)
-		return (&game->textures.north);
-	return (&game->textures.south);
+		return (&game->textures.south);
+	return (&game->textures.north);
 }
 
 static void	calculate_wall_dimensions(t_game *game, t_ray *ray,
