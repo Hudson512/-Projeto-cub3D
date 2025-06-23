@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:54:27 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/16 09:20:00 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/23 09:00:23 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	has_invalid_map_char(char **map)
 	int	j;
 
 	i = 0;
+	if (!map || !*map)
+		return (1);
 	while (map[i])
 	{
 		j = 0;
@@ -44,6 +46,8 @@ static int	is_map_line(char *line)
 	int	i;
 
 	i = 0;
+	if (!line || !*line)
+		return (0);
 	while (line[i] == ' ')
 		i++;
 	return (line[i] == '1');

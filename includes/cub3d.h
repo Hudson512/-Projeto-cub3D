@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/17 10:30:39 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/23 09:29:32 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ int				ft_atoi_color(const char *nptr);
 int				is_empty_line(char *line);
 int				free_matrix(char **mat);
 void			print_config(t_config *config);
+void			print_map(t_config *config);
 
 // Parse file
 int				parse_file(const char *filename, t_config *config);
@@ -199,6 +200,7 @@ int				check_texture_path(char *path);
 int				is_color_valid(t_color color);
 int				has_invalid_map_char(char **map);
 int				have_valid_wall(char **map);
+int				map_have_config_duplicate(t_config *config);
 
 // capture map data
 void			capture_texture(char *line, t_config *config);

@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 09:49:18 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/17 10:30:27 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:33:33 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,19 @@ int	check_digit_count(char *line, int start)
 int	is_digit_string(char *line)
 {
 	int	i;
+	int	cont_digits;
 
 	i = 0;
-	while (line[i] && line[i] != ',' && line[i] != '\n' && i < 3)
+	cont_digits = 0;
+	while (line[i] && line[i] != ',' && line[i] != '\n')
 	{
 		if (!ft_isdigit(line[i]) && line[i] != ' ')
 			return (0);
+		if (ft_isdigit(line[i]))
+			cont_digits++;
 		i++;
 	}
-	if (i == 0 || i > 3)
+	if (i == 0 || !(cont_digits >= 0 && cont_digits <= 3))
 		return (0);
 	return (1);
 }

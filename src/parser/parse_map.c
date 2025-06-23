@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:09 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/19 15:16:09 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/23 09:41:43 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,8 @@ void	capture_map(char *line, t_config *config)
 	while (*line == ' ' || *line == '\t')
 		line++;
 	empty = is_empty_line(line);
-	if (config->found_empty && !empty && !ft_strncmp(line, "NO ", 3) == 0
-		&& !ft_strncmp(line, "SO ", 3) == 0 && !ft_strncmp(line, "WE ", 3) == 0
-		&& !ft_strncmp(line, "EA ", 3) == 0 && !ft_strncmp(line, "F ", 2) == 0
-		&& !ft_strncmp(line, "C ", 2) == 0)
-		config->south_texture_set += 1;
+	if (map_have_config_duplicate(config))
+		return ;
 	if (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0
 		|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0
 		|| ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)

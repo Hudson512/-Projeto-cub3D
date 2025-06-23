@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/19 15:28:58 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/23 08:54:11 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,24 @@ void	print_config(t_config *config)
 	{
 		printf("%s", config->map[i]);
 		printf("\n");
+		i++;
+	}
+}
+
+// print_map
+void	print_map(t_config *config)
+{
+	int	i;
+
+	i = 0;
+	if (!config->map)
+	{
+		printf("Mapa vazio\n");
+		return ;
+	}
+	while (config->map[i])
+	{
+		printf("%s\n", config->map[i]);
 		i++;
 	}
 }
