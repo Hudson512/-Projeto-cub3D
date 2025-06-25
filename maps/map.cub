@@ -1,9 +1,9 @@
 NO ./textures/p_a.xpm
 SO ./textures/p_a.xpm
-F 124, 181, 80
+F 124, 181, 1
 WE ./textures/p_a.xpm
 EA ./textures/p_a.xpm
-C 160, 00222, 00        255
+C 000,     0,	123
 
 
 
