@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/25 14:17:27 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:39:01 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	init_config(t_config *config)
 	config->south_texture_set = 0;
 	config->west_texture_set = 0;
 	config->east_texture_set = 0;
+	config->error_flag = 0;
 }
 
 int	parse_file(const char *filename, t_config *config)
@@ -57,6 +58,7 @@ int	parse_file(const char *filename, t_config *config)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
+		validate_config_line(line, config);
 		(capture_texture(line, config), capture_color(line, config));
 		(capture_map(line, config), free(line));
 		line = get_next_line(fd);

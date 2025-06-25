@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator_config.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:54:45 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/23 12:25:44 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:34:15 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,20 @@ static int	analyze_map(t_config *config)
 {
 	config->map_height = map_rows(config->map);
 	config->map_width = map_cols(config->map);
+	if (config->error_flag == 1)
+		parse_exit("Error\nIdentificador de configuração inválido\n");
+	if (config->error_flag == 2)
+		parse_exit("Error\nLinha de configuração incompleta\n");
 	if (map_have_config_duplicate(config))
-	{
 		parse_exit("Error\nConfiguração duplicada no arquivo\n");
-	}
 	if (config->map == NULL || config->map[0] == NULL)
-	{
 		parse_exit("Error\nMapa vazio\n");
-	}
 	if (config->map_width <= 2 || config->map_height <= 2)
-	{
 		parse_exit("Error\nMapa muito pequeno\n");
-	}
 	if (has_invalid_map_char(config->map))
-	{
 		parse_exit("Error\nMapa contém caracteres inválidos\n");
-	}
 	if (!have_valid_wall(config->map))
-	{
 		parse_exit("Error\nMapa aberto\n");
-	}
 	if (player_on_border(config->map))
 		parse_exit("Error\nPlayer na borda do mapa!\n");
 	return (0);

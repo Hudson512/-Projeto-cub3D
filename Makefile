@@ -6,7 +6,7 @@
 #    By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 15:53:23 by hmateque          #+#    #+#              #
-#    Updated: 2025/06/25 14:19:13 by hmateque         ###   ########.fr        #
+#    Updated: 2025/06/25 15:35:27 by hmateque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRCS =	src/main.c\
 		src/parser/validator_map_aux.c\
 		src/parser/validator_map.c\
 		src/parser/validator_texture.c\
+		src/parser/validator_general.c\
 
 
 

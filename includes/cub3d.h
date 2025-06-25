@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/25 13:26:18 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:36:31 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_config
 	int			south_texture_set;
 	int			west_texture_set;
 	int			east_texture_set;
+	int			error_flag;
 }				t_config;
 
 typedef struct s_img
@@ -202,6 +203,7 @@ int				has_invalid_map_char(char **map);
 int				have_valid_wall(char **map);
 int				map_have_config_duplicate(t_config *config);
 int				is_valid_map_char(char c);
+void			validate_config_line(char *line, t_config *config);
 
 // capture map data
 void			capture_texture(char *line, t_config *config);
