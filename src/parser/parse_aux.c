@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 09:49:18 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/25 14:18:04 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:44:20 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,3 @@ int	is_digit_string(char *line)
 		return (0);
 	return (1);
 }
-
-
