@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:57:04 by hmateque          #+#    #+#             */
-/*   Updated: 2025/05/28 10:15:21 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/25 11:31:00 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	check_texture_path(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_putstr_fd("Caminho da textura inválido\n", 2);
 		return (0);
 	}
 	close(fd);

@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:59:32 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/23 09:29:32 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:26:18 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ int				parse_file(const char *filename, t_config *config);
 
 // validation map
 int				check_extension(const char *filename, char *str_ext);
-int				validate_map_at_end(const char *filename);
+int				validate_map_at_end(const char *filename, int error);
 void			validator_config(t_config *config);
 int				is_texture_valid(char *texture);
 int				check_texture_path(char *path);
@@ -201,6 +201,7 @@ int				is_color_valid(t_color color);
 int				has_invalid_map_char(char **map);
 int				have_valid_wall(char **map);
 int				map_have_config_duplicate(t_config *config);
+int				is_valid_map_char(char c);
 
 // capture map data
 void			capture_texture(char *line, t_config *config);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_colors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:51:06 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/24 11:54:59 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:23:06 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ static int	parse_number(char *line, int *i)
 		return (-1);
 	while (line[*i] && line[*i] == ' ')
 		(*i)++;
-	if (is_digit_string(&line[*i]) == 0 || check_digit_count(line, *i) == -1)
-		return (-1);
 	num = ft_atoi_color(&line[*i]);
 	while (line[*i] && line[*i] != ',')
 		(*i)++;

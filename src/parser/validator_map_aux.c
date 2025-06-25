@@ -3,42 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   validator_map_aux.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:54:27 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/23 12:27:00 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/06/25 12:27:33 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
 // Verifica se o caractere é um dos válidos para o mapa
-static int	is_valid_map_char(char c)
+int	is_valid_map_char(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W'
 		|| c == ' ');
-}
-
-int	has_invalid_map_char(char **map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	if (!map || !*map)
-		return (1);
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (!is_valid_map_char(map[i][j]))
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
 }
 
 static int	is_map_line(char *line)
@@ -50,34 +28,60 @@ static int	is_map_line(char *line)
 		return (0);
 	while (line[i] == ' ')
 		i++;
-	return (line[i] == '1');
+	return (line[i] == '1' || line[i] == '0');
 }
 
-int	validate_map_at_end(const char *file_path)
+static void	process_line(char *line, int *in_map, int *end_map, int *error)
+{
+	if (!*in_map && is_map_line(line))
+		*in_map = 1;
+	else if (*in_map && is_empty_line(line))
+		*end_map = 1;
+	else if ((*end_map && !is_empty_line(line)) || (*in_map
+			&& !is_map_line(line) && !is_empty_line(line)))
+	{
+		ft_putstr_fd("Error\nConteúdo inválido após o mapa\n", 2);
+		*error = 1;
+	}
+}
+
+static void	clear_remaining_lines(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+}
+
+int	validate_map_at_end(const char *file_path, int error)
 {
 	int		fd;
 	char	*line;
 	int		in_map;
+	int		end_map;
 
 	in_map = 0;
+	end_map = 0;
+	error = 0;
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
-		return (ft_putstr_fd("Error\nNao foi possivel abrir o arquivo\n", 2), 0);
+		return (ft_putstr_fd("Error\nNao foi possivel abrir o arquivo\n", 2),
+			0);
 	line = get_next_line(fd);
-	while (line != NULL)
+	while (line != NULL && !error)
 	{
-		if (!in_map && is_map_line(line))
-			in_map = 1;
-		else if (in_map && !is_map_line(line) && !is_empty_line(line))
-		{
-			free(line);
-			close(fd);
-			ft_putstr_fd("Error\nErro na configuração do mapa\n", 2);
-			return (0);
-		}
+		process_line(line, &in_map, &end_map, &error);
 		free(line);
-		line = get_next_line(fd);
+		if (!error)
+			line = get_next_line(fd);
 	}
+	clear_remaining_lines(fd);
 	close(fd);
+	if (error)
+		return (0);
 	return (1);
 }

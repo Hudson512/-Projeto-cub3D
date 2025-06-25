@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:17:59 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/23 08:54:11 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:19:14 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	parse_file(const char *filename, t_config *config)
 	init_config(config);
 	if (!check_extension(filename, ".cub"))
 		return (ft_putstr_fd("Error\nArquivo deve ter a extensao .cub\n", 2), 1);
-	if (!validate_map_at_end(filename))
+	if (!validate_map_at_end(filename, 0))
 		return (1);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
