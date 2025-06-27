@@ -6,7 +6,7 @@
 /*   By: hmateque <hmateque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:57:04 by hmateque          #+#    #+#             */
-/*   Updated: 2025/06/25 11:31:00 by hmateque         ###   ########.fr       */
+/*   Updated: 2025/06/26 08:59:16 by hmateque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static int	validate_texture_img(void *mlx_ptr, char *path)
 	img = mlx_xpm_file_to_image(mlx_ptr, path, &width, &height);
 	if (!img)
 	{
-		ft_putstr_fd("Erro ao carregar a textura\n", 2);
 		mlx_destroy_display(mlx_ptr);
 		free(mlx_ptr);
 		return (0);
